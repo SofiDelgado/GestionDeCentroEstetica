@@ -34,7 +34,7 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
     scanf("%d",&Recep.Dni);
     printf("Ingrese el telefono: ");
     _flushall();
-    gets(Recep.Telefono); 
+    gets(Recep.Telefono);  
 	  
 	int permisos,n,min=0,may=0,dig=0;
 	char contra[60];
