@@ -1,4 +1,4 @@
-void MenuAdmin(FILE *arch,Profesionales Prof,Recepcionista Recep,int contarusuarioR)
+void MenuAdmin(FILE *arch,Profesionales Prof,Recepcionista Recep)
 {
 	int op;
 	int a;
@@ -15,7 +15,7 @@ void MenuAdmin(FILE *arch,Profesionales Prof,Recepcionista Recep,int contarusuar
 	{
 		case 1:
 		system("cls");
-		CargarProfesional(arch,Prof,contarusuarioR);
+		CargarProfesional(arch,Prof);
 		break;
 		case 2:
 		system("cls");
