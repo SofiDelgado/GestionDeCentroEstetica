@@ -8,10 +8,12 @@
 #include<Login.h>
 
 main(){
-	FILE*arch;
-	int op,contarusuarioR;
+	FILE*prof;
+	FILE*recep;
+	FILE*client;
+	int op;
 	
-	//login(arch,Prof,Recep,contarusuarioR);
+	login(prof,Prof,Recep);
 	do{
 	/*if(Prof.permisoP==1 or )
 	{*/
@@ -37,7 +39,7 @@ main(){
 	{
 		case 1:
 		system("cls");
-		MenuAdmin(arch,Prof,Recep,contarusuarioR);
+		MenuAdmin(prof,Prof,Recep);
 		break;
 		case 2:system("cls");
 		break;
