@@ -1,4 +1,4 @@
-void login(FILE *arch,Profesionales Prof,Recepcionista Recep,int contarusuarioR)
+void login(FILE *arch,Profesionales Prof,Recepcionista Recep)
 {	
 
 	int i,b;
