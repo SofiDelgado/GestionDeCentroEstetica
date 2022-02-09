@@ -24,7 +24,7 @@ struct Turnos{
 	char DetalleAtencion[60];
 	
 };
-void CargarRecepcionista(FILE *arch,Recepcionista Recep)
+void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 {
 	arch = fopen ("Recepcionistas.dat ","a+b");
 	printf("Ingrese el apellido y nombre: ");
@@ -76,7 +76,7 @@ void CargarRecepcionista(FILE *arch,Recepcionista Recep)
 	    fwrite(&Recep,sizeof(Recepcionista),1,arch);
 		fclose(arch);
 }
-void CargarProfesional(FILE *arch,Profesionales Prof,int contarusuarioR)
+void CargarProfesional(FILE *prof,Profesionales Prof)
 {
 	arch = fopen ("Profesionales.dat","a+b");
 	printf("Ingrese nombre y apellido: ");
@@ -132,7 +132,7 @@ void CargarProfesional(FILE *arch,Profesionales Prof,int contarusuarioR)
 	fclose(arch);
 	
 }
-void ver(FILE *arch,Profesionales Prof)
+void ver(FILE *prof,Profesionales Prof)
 {
 	printf("VER");
 	arch = fopen ("Profesionales.dat","a+b");
