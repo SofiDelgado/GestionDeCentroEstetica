@@ -1,8 +1,9 @@
-void login(FILE *arch,Profesionales Prof,Recepcionista Recep)
+void login(FILE *prof,Profesionales Prof,Recepcionista Recep)
 {	
 
 	int i,b;
-	arch = fopen ("Profesionales.dat","a+b");
+		int mcontra=0, musuario=0;
+	
 	char usuario[60],contrasenia[60];
 		printf("------------------------");
 		printf("\nINICIO DE SESION\n");
@@ -13,19 +14,29 @@ void login(FILE *arch,Profesionales Prof,Recepcionista Recep)
 		_flushall();
 		gets(contrasenia);
 		
-		fread(&Prof,sizeof(Profesionales),1,arch);
-		
-		while (!feof(arch))
+		prof = fopen ("Profesionales.dat","a+b");
+		while(!feof(prof) and mcontra==0 and musuario==0)
 		{
-			if (strcmp(usuario, Prof.UsuarioP)==0 and strcmp(contrasenia, Prof.ContraseniaP)==0)
+			if((strcmp(usuario,Prof.UsuarioP)!=0) or (strcmp(contrasenia,Prof.ContraseniaP)!=0)) //Cambio a uso de función strcmp()
 			{
-			b=1;
+				fread(&Prof,sizeof(Profesionales),1,prof);
+			}
+			else
+			{
+				mcontra=1;
+				musuario=1;
 			}
 		}
-		fclose(arch);
-		    if (b==1)
-			{
-				printf("Correcto!");
-			}else printf("Datos no encontrados...");
-		printf("------------------------");
+		if(mcontra==0 or musuario==0)
+		{
+			printf("\nLos datos ingresados son incorrectos");
+		}
+		else
+		{
+			printf("\nInicio de sesion correcto.\n");
+			//verificacion=true;
+		}
+		
+		fclose(prof);
+
 }
