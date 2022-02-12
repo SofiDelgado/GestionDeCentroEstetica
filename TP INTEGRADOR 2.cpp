@@ -6,49 +6,46 @@
 #include<menus.h>
 #include<gotoxy.h>
 #include<Login.h>
+#include<Recepcion.h>
 
 main(){
 	FILE*prof;
 	FILE*recep;
 	FILE*client;
+	FILE *turn;
 	int op;
+	int permiso;
+	bool verificacion=false;
 	
-	login(prof,Prof,Recep);
-	do{
-	/*if(Prof.permisoP==1 or )
-	{*/
-	printf("\n1)ADMINISTRACION");
-	printf("\n2)RECEPCION");
-	printf("\n3)ESPACIOS");
-	printf("\n4)Salir\nOpcion: ");
-	scanf("%d", &op);
-	/*}
-	if(Usu.Us==2)
+	//INICIO DE SESION
+	login(prof,recep,Prof,Recep,permiso,verificacion);
+	//MenuAdmin(prof,Prof,Recep);
+	
+	if(permiso==1 and verificacion==true)
 	{
-	printf("\n1)RECEPCION");
-	printf("\n2)Salir\nOpcion: ");
-	scanf("%d", &op);
-	}
-	if(Usu.Permiso==3)
-	{
-	printf("\n1PROFECIONAL");
-	printf("\n2)Salir\nOpcion: ");
-	scanf("%d", &op);
-	}*/
-	switch(op)
-	{
-		case 1:
 		system("cls");
 		MenuAdmin(prof,Prof,Recep);
-		break;
-		case 2:system("cls");
-		break;
-		case 3:
-		system("cls");
-		break;
-		case 4: break;
-		default: printf("\nERROR...\n"); break;
 	}
-	}while(op!=4);
+	else
+	{
+		printf("\nNo inicio sesion");
+	}
+	if(permiso==2)
+	{
+		system("cls");
+		MenuRecep(client,clien,prof,Prof,turn,Turn);
+	}
+	else
+	{
+		printf("\nNo inicio sesion");
+	}
+	if(permiso==3)
+	{
+	
+	}
+	else
+	{
+		printf("\nNo inicio sesion");
+	}
 }
 
