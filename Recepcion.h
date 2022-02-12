@@ -1,27 +1,6 @@
-struct fecha
-{
-	int dia,mes,anio;
-};
-
-struct Cliente
-{
-	char apeynom[60], Domicilio[60],Localidad[60],Telefono[25];
-	int Dni;
-	float peso;
-	fecha fechadeNacimiento;
-}Clien;
-
-struct Turnos
-{
-	int IDprof,DNIcliente;
-	fecha FechaATENCION;
-	char DetalleAtencion[60];
-}Turn;
-
-void Regcliente(FILE *client, Cliente Clien)
+void Regcliente(FILE *client,Cliente Clien)
 {
 	client = fopen ("Clientes.dat","ab");
-	
 	printf("\nIngrese el nombre del paciente: ");
 		_flushall();
 		gets(Clien.apeynom);
