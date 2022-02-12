@@ -1,14 +1,4 @@
-struct Recepcionista{
-	int IDrecep,Dni,permisoR;
-	char apeynom[60],Tel[60];
-	char UsuarioR[60],ContraseniaR[50];
-}Recep;
-struct Profesionales{
-	int IDprof,Dni,permisoP;
-	char apeynom[60];
-	char Tel[25];
-	char UsuarioP[60],ContraseniaP[50];
-}Prof;
+
 void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 {
 	Recepcionista user_aux;
