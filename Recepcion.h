@@ -1,18 +1,3 @@
-struct Recepcionista
-{
-	int IDrecep,Dni;
-	char apeynom[60],Telefono[60];
-	char UsuarioR[60],ContraseniaR[50];
-}Recep;
-
-struct Profesionales
-{
-	int IDprof,Dni;
-	char apeynom[60];
-	char Tel[25];
-	char UsuarioP[60],ContraseniaP[50];
-}Prof;
-
 struct fecha
 {
 	int dia,mes,anio;
@@ -24,16 +9,16 @@ struct Cliente
 	int Dni;
 	float peso;
 	fecha fechadeNacimiento;
-};Clien
+}Clien;
 
 struct Turnos
 {
 	int IDprof,DNIcliente;
 	fecha FechaATENCION;
 	char DetalleAtencion[60];
-};Turn
+}Turn;
 
-void Regcliente (FILE *client, Cliente Clien)
+void Regcliente(FILE *client, Cliente Clien)
 {
 	client = fopen ("Clientes.dat","ab");
 	
