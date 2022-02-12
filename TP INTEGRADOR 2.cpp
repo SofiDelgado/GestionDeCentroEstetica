@@ -12,28 +12,27 @@ main(){
 	FILE*prof;
 	FILE*recep;
 	FILE*client;
-	FILE *turn;
+	FILE*turn;
 	int op;
 	int permiso;
 	bool verificacion=false;
 	
 	//INICIO DE SESION
 	login(prof,recep,Prof,Recep,permiso,verificacion);
-	//MenuAdmin(prof,Prof,Recep);
-	
+
 	if(permiso==1 and verificacion==true)
 	{
 		system("cls");
-		MenuAdmin(prof,Prof,Recep);
+		MenuAdmin(prof,Prof,recep,Recep);
 	}
 	else
 	{
 		printf("\nNo inicio sesion");
 	}
-	if(permiso==2)
+	if(permiso==2 and verificacion==true)
 	{
 		system("cls");
-		MenuRecep(client,clien,prof,Prof,turn,Turn);
+		MenuRecepcionista(client,Clien,prof,Prof,turn,Turn);
 	}
 	else
 	{
