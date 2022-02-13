@@ -1,4 +1,34 @@
-
+struct Recepcionista{
+	int IDrecep,Dni,permisoR;
+	char apeynom[60],Tel[60];
+	char UsuarioR[60],ContraseniaR[50];
+}Recep;
+struct Profesionales{
+	int IDprof,Dni,permisoP;
+	char apeynom[60];
+	char Tel[25];
+	char UsuarioP[60],ContraseniaP[50];
+}Prof;
+struct fecha
+{
+	int dia,mes,anio;
+};
+struct Cliente{
+	char apeynom[60], Domicilio[60],Localidad[60],Telefono[25];
+	int Dni;
+	float peso;
+	fecha fechadeNacimiento;
+}Clien;
+struct Turnos{
+	int IDprof,DNIcliente;
+	fecha FechaATENCION;
+	char DetalleAtencion[60],apeynom[50];
+}Turn;
+struct Atenciones
+{
+	int IDprof;
+	int cant_atenciones;
+}Aten;
 void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 {
 	Recepcionista user_aux;
@@ -149,6 +179,8 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 
 	if(bandera==2)
 	{
+		srand(time(NULL));
+		Recep.IDrecep = 1+rand()%201;//le damos un id aleatorio
 		printf("Ingrese nombre y apellido: ");
 	   	_flushall();
 	    gets(Recep.apeynom);
@@ -314,6 +346,8 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 
 	if(bandera==2)
 	{
+		srand(time(NULL));
+		Prof.IDprof = 1+rand()%201;//le damos un id aleatorio , faltaria validacion de que no existe previamente.
 		printf("Ingrese nombre y apellido: ");
 	   	_flushall();
 	    gets(Prof.apeynom);
@@ -330,7 +364,140 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 	fclose(prof);
 	
 }
+void atenciones(FILE *turn, Turnos Turn)
+{
+	int mes,b=0;
+	turn=fopen("Turnos.dat","rb");
+	printf("\nIngrese el mes para mostrar las atenciones: ");
+	scanf("%d",&mes);
+	fread(&Turn,sizeof(Turnos),1,turn);
+	while(!feof(turn))
+	{
+		if(mes==Turn.FechaATENCION.mes)
+		{
+		b=1;
+		printf("\nFecha\n");
+		printf("\nDia: %d",Turn.FechaATENCION.dia);
+		printf("\nMes: %d",Turn.FechaATENCION.mes);
+		printf("\nAnio: %d",Turn.FechaATENCION.anio);
+		printf("\nDNI del paciente: %d",Turn.DNIcliente);
+		printf("\nDetalles de atencion: %s\n",Turn.DetalleAtencion);
+		printf("===========================================\n");
+		}
+		fread(&Turn,sizeof(Turnos),1,turn);
+	}
+	fclose(turn);
+	if(b==0)
+	{
+		printf("\nNo hay turnos para el mes ingresado\n");
+	}
 
+	
+}
+	
+void ranking()
+{
+	FILE *arch;
+    
+	Profesionales reg_med[50];
+	Turnos reg_turnos[50];
+	Atenciones reg_atenciones[50],aux;
+
+	bool band = true,stop;
+    int i = 0,num_meds = 0,num_turnos = 0,contador = 0;
+
+    //Archivo de Medicos:
+    arch=fopen("Profesionales.dat","rb");
+
+    if (arch==NULL)
+    {
+        printf("\nEl archivo 'Profesionales.dat' no fue creado o se elimino, contacte con soporte.");
+		band = false;
+    }
+    else
+    {
+        fread(&reg_med[i],sizeof(Profesionales),1,arch);
+        while (!feof(arch))
+        {
+            i++;
+            fread(&reg_med[i],sizeof(Profesionales),1,arch);
+        }
+        num_meds = i;
+        i = 0;
+        fclose(arch);
+    }
+
+	//Archivo de turnos:
+    arch=fopen("Turnos.dat","rb");
+
+    if (arch==NULL)
+    {
+        printf("\nEl archivo 'Turnos.dat' no fue creado o se elimino, contacte con soporte.");
+		band = false;
+    }
+    else
+    {
+        fread(&reg_turnos[i],sizeof(Turnos),1,arch);
+        while (!feof(arch))
+        {
+            i++;
+            fread(&reg_turnos[i],sizeof(Turnos),1,arch); 
+        }
+        num_turnos = i;
+        i = 0;
+        fclose(arch);
+    }
+
+	if (band)
+	{
+		//Obtiene la cantidad de turnos por Medico:
+		for (i = 0; i < num_meds; i++)
+		{
+			contador = 0;
+
+			for (int k = 0; k < num_turnos; k++)
+			{
+				if ((reg_med[i].IDprof == reg_turnos[k].IDprof) /*and (reg_turnos[k].mostrado == 1)*/)
+				{
+					contador++;
+				}
+			}
+			
+			reg_atenciones[i].IDprof = reg_med[i].IDprof;
+			reg_atenciones[i].cant_atenciones = contador;
+		}
+		
+		//Ordena el ranking de mayor a menor:
+		do
+		{
+			stop=false;
+			
+			for (i = 0 ; i < num_meds-1 ; i++)
+			{
+				if(reg_atenciones[i].cant_atenciones < reg_atenciones[i+1].cant_atenciones)
+				{
+					aux=reg_atenciones[i];
+					reg_atenciones[i]=reg_atenciones[i+1];
+					reg_atenciones[i+1]=aux;
+					stop=true;
+				}
+			}
+		}
+		while (stop);
+
+		//Muestra el ranking de Medicos:
+		for (i = 0; i < num_meds; i++)
+		{
+			printf("\nPuesto %d:",i+1);
+			printf("\nMatricula: %d",reg_atenciones[i].IDprof);
+			printf("\nNombre y apellido: %s",reg_med[i].apeynom);
+			printf("\nCantidad de atenciones: %d",reg_atenciones[i].cant_atenciones);
+			printf("\n--------------------------------\n");
+		}
+		
+	}
+	
+}
 void ver(FILE *prof,Profesionales Prof)
 {
 	printf("VER");
