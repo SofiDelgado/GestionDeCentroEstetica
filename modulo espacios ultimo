@@ -1,0 +1,220 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <strings.h>
+#define TRUE 1
+#define FALSE 0
+
+struct fecha{
+	int dia,mes,anio;
+};
+struct fechA{
+	int dia,mes,anio;
+};
+struct FechaATENCIO{
+	int dia,mes,anio;
+};
+struct Cliente{ //ver
+	char apeynom[60], Domicilio[60], Localidad[60], Telefono[25];
+	int dni;
+	float peso;
+	fecha fechadeNacimiento;
+};
+struct Profesionales{ //ver
+	char UsuarioP[10], ContraseniaP[10], apeynom[60], Tel[25],;
+	int DniProf, permisoP;
+};
+struct Turnos{
+	char apeynom[60];
+	int DNIcliente;
+	FechaATENCIO FechaATENCION;
+};
+struct registro{
+	char avance[380], doc[60];
+	fecha fec;
+	fechA fechAtencion;
+	bool borrado;
+	
+};
+void progreso(registro reg);
+bool inicio_de_sesion(registro reg);
+main(){
+	registro reg;
+	Cliente Clien;
+	Profesionales Prof;
+	Turnos Turn;
+	FILE *prof;
+	FILE *turn;
+	FILE *client;
+	char rep=true;
+	int op, valor,valoR;
+	bool iniciar;
+	
+	do{
+		printf ("\n\tModulo Espacios");
+			printf("\n\t--------------\n");
+			printf ("\n\t\t1.- Iniciar Sesion");
+			printf ("\n\t\t2.- Visualizar Lista de Espera de Turnos");
+			printf ("\n\t\t3.- Registrar Evolución del tratamiento");
+			printf ("\n\t\t4.- Cerrar la aplicacion.");
+			
+			printf ("\nIngrese la opcion: ");
+			scanf("%d",&op);
+			
+	switch(op){
+		case 1:			
+			iniciar=inicio_de_sesion(reg);
+			break;						
+		case 2:
+			if(iniciar){
+				turn=fopen( "Profesionales.dat" , "w+b" );
+				fread(&Turn,sizeof(Turnos),1,turn);
+				printf("\n\tIngrese la fecha(2022)");
+				printf("\tDia: ");
+				scanf("%d",&reg.fec.dia);
+				printf("\tMes: ");
+				scanf("%d",&reg.fec.mes);
+				printf("\tLista de espera:\n");
+				int verDia, verMes,e=1;;
+				while(!feof(turn)){
+					verDia=strcmp(reg.fec.dia,Turn.FechaATENCION.dia);
+					verMes=strcmp(reg.fec.mes,Turn.FechaATENCION.mes);
+					if(verDia ==0 && verMes==0){
+						while(!feof(Turn)){
+							printf("\n\t%d.-",e);
+							puts(Turn.apeynom);//nombre
+							e++;
+						}
+					}else{
+						printf("\nNo hay turnos registrados para la fecha.");
+					}
+					
+				}
+			}else{
+				printf("\n\tNo se pudo iniciar sesion correctamente");
+			}
+			system("PAUSE");
+			break;
+		case 3:
+			if(iniciar){
+				prof=fopen( "Profesionales.dat" , "w+b" );
+				fread(&Prof,sizeof(Profesionales),1,prof);
+				progreso(reg);		
+			}else{
+				printf("\n\tNo se pudo iniciar sesion correctamente");
+			}
+			break;
+			
+		case 4:
+			rep=false;
+            break;
+		default:
+			printf("\n La opcion elegida no pertence al menu. Por favor elija una de las opciones del menu. Gracias...\n");
+		    	system ("PAUSE");
+			break;
+	}
+	}while(rep==true);
+}
+//iniciar sesion
+bool inicio_de_sesion(registro reg){
+	FILE *prof;
+	char nombreUs[10],contra[10];
+	prof=fopen("Profesionales.dat" , "w+b" );
+	fread(&Prof,sizeof(Profesionales),1,prof);
+	printf ("\tNombre de usuario: ");
+	_flushall();
+	gets(nombreUs);
+	printf ("\tContraseña: ");
+	_flushall();
+	gets(contra);
+	while(!feof(prof)){
+		valor=strcmp(nombreUs, Prof.UsuarioP);
+		valoR=strcmp(contra,Prof.ContraseniaP);
+		if(valor==0){
+			if(valoR==0){
+				return true;
+			}else{
+				printf("Contraseña incorrecta");
+				return false;
+			}
+			
+		}else{
+			printf("Usuario incorrecto");
+			return false;
+		}
+		fread(&Prof,sizeof(Profesionales),1,prof);
+	}	
+}
+//registrar el progreso  del paciente
+void progreso(registro reg){
+	int dniPac,valorDoc,valoRDoc,datosPa, dias,meses,ed;
+	int ani=2022;
+	float pesoPac;
+	FILE *turn;
+	FILE *client;
+	
+	printf("\nIngrese la fecha(2022)");
+	printf("\tDia: ");
+	scanf("%d",&reg.fec.dia);
+	printf("\tMes: ");
+	scanf("%d",&reg.fec.mes);
+	printf("\nIngrese el nombre del doctor: ");
+	_flushall();
+	gets(reg.doc);
+
+	printf("\tDATOS DEL PACIENTE");
+	printf("\t\tDNI: ");
+	scanf("%d",&dniPac);
+	turn= fopen ("Turnos.dat","w+b");
+	fread(&Turn,sizeof(Turnos),1,turn);
+	while(!feof(turn)){
+		valoRDoc=strcmp(dniPac,Turn.DNIcliente);
+		if(valoRDoc==0){
+			client=fopen ("Clientes.dat","w+b");
+			fread(&Clien,sizeof(Cliente),1,client);
+				while(!feof(client)){
+					datosPa=strcmp(Turn.DNIcliente,Clien.Dni);
+					if(datosPa==0){
+						printf("\2\tDATOS DEL PACIENTE");
+						printf("\nNombre: ");
+						puts(Clien.apeynom);
+						printf("\nDNI: %d",Clien.Dni);
+						printf("\nDomicilio: ");
+						puts(Clien.Domicilio);
+						printf("\nLocalidad: ");
+						puts(Clien.Localidad);
+						printf("\nPeso: %.1f",Clien.peso);
+						printf("\nTelefono: ");
+						puts(Clien.Telefono);
+						//calcular edad
+							if(reg.fec.dia<Clien.fechadeNacimiento.dia){
+								reg.fec.dia=reg.fec.dia+30;
+								reg.fec.mes=reg.fec.mes-1;
+								dias=reg.fec.dia-Clien.fechadeNacimiento.dia;
+							}else{
+								dias=reg.fec.dia-Clien.fechadeNacimiento.dia;
+							}
+							if(reg.fec.mes<Clien.fechadeNacimiento.mes){
+								reg.fec.mes=reg.fec.mes+12;
+								ani=ani-1;
+								meses=reg.fec.mes-Clien.fechadeNacimiento.mes;
+							}else{
+								meses=reg.fec.mes-Clien.fechadeNacimiento.mes;
+							}
+						ed=ani-Clien.fechadeNacimiento.anio;
+						printf("\nEdad: %d",ed);
+						
+					}
+				}	
+				
+			printf("\nRegistre los avances del paciente:\n\t");
+			_flushall();
+			gets(reg.avance);
+			
+		}else{
+			printf("\nPACIENTE NO REGISTRADO");
+			break;
+		}
+		fread(&reg, sizeof(registro),1,turn);
+	}
+}
