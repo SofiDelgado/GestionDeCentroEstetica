@@ -9,7 +9,8 @@ void Regcliente(FILE *client,Cliente Clien)
 		gets(Clien.Domicilio);
 		
 		printf("\nIngrese el DNI del paciente: ");
-		scanf("%d",&Clien.Dni);
+		_flushall();
+		gets(Clien.Dni)
 		
 		printf("\nIngrese la localidad del paciente: ");
 		_flushall();
@@ -80,7 +81,8 @@ void Regturno (FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
 			Turn.IDprof=Prof.IDprof;
 			
 			printf("Ingrese el DNI del paciente: ");
-			scanf("%d",&Turn.DNIcliente);
+			_flushall();
+			gets(Turn.DNIcliente);
 			printf("Ingrese el nombre y apellidodel paciente: ");
 			_flushall();
 			gets(Turn.apeynom);

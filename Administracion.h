@@ -14,15 +14,14 @@ struct fecha
 	int dia,mes,anio;
 };
 struct Cliente{
-	char apeynom[60], Domicilio[60],Localidad[60],Telefono[25];
-	int Dni;
+	char apeynom[60], Domicilio[60],Localidad[60],Telefono[25],Dni[50];
 	float peso;
 	fecha fechadeNacimiento;
 }Clien;
 struct Turnos{
-	int IDprof,DNIcliente;
+	int IDprof;
 	fecha FechaATENCION;
-	char DetalleAtencion[60],apeynom[50];
+	char DetalleAtencion[60],apeynom[50],DNIcliente[50];
 }Turn;
 struct Atenciones
 {
@@ -380,7 +379,7 @@ void atenciones(FILE *turn, Turnos Turn)
 		printf("\nDia: %d",Turn.FechaATENCION.dia);
 		printf("\nMes: %d",Turn.FechaATENCION.mes);
 		printf("\nAnio: %d",Turn.FechaATENCION.anio);
-		printf("\nDNI del paciente: %d",Turn.DNIcliente);
+		printf("\nDNI del paciente: %s",Turn.DNIcliente);
 		printf("\nDetalles de atencion: %s\n",Turn.DetalleAtencion);
 		printf("===========================================\n");
 		}
@@ -489,7 +488,7 @@ void ranking()
 		for (i = 0; i < num_meds; i++)
 		{
 			printf("\nPuesto %d:",i+1);
-			printf("\nMatricula: %d",reg_atenciones[i].IDprof);
+			printf("\nID: %d",reg_atenciones[i].IDprof);
 			printf("\nNombre y apellido: %s",reg_med[i].apeynom);
 			printf("\nCantidad de atenciones: %d",reg_atenciones[i].cant_atenciones);
 			printf("\n--------------------------------\n");
