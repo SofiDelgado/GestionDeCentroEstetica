@@ -36,6 +36,18 @@ main(){
 	int op,j;
 	int permiso;
 	bool verificacion=false;
+	/*
+	registro reg;
+	Cliente Clien;
+	Profesionales Prof;
+	Turnos Turn;
+	FILE *prof;
+	FILE *turn;
+	FILE *client;
+	char rep=true;
+	int op, valor,valoR;
+	bool iniciar;
+	*/
 	
 	//marco
 	for (j=1; j < 120; j++) {
@@ -62,18 +74,14 @@ main(){
 	
 	  gotoxy(119, 24);
 	  printf("%c", 223);
+	  
+	  
 	//INICIO DE SESION
 	system("color 70");
 	gotoxy(52,7);
-	//MARCO
-	for (j=1; j < 6; j++) {
-	  gotoxy(j, 1);
-	  printf("%c", 177);
-	  gotoxy(j, 24);
-	  printf("%c",177);
-	 }
 	login(prof,recep,Prof,Recep,permiso,verificacion);
-
+	//fin inicio de sesion
+	//MENUS
 	if(permiso==1 and verificacion==true)
 	{
 		system("cls");
@@ -84,13 +92,13 @@ main(){
 		if(permiso==2 and verificacion==true)
 		{
 		system("cls");
-		MenuRecepcionista(client,Clien,prof,Prof,turn,Turn);
+		MenuRecep(client,Clien,prof,Prof,turn,Turn);
 		}
 		else
 		{	
 			if(permiso==3 and verificacion==true)
 			{
-				MenuEspacios(prof,Prof,turn,Turn);
+				MenuEspacios(prof,Prof,turn,Turn,client);
 			}
 			else
 			{
