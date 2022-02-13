@@ -116,36 +116,6 @@ main(){
 	}while(rep==true);
 }
 //iniciar sesion
-bool inicio_de_sesion(registro reg){
-	FILE *prof;
-	char nombreUs[10],contra[10];
-	prof=fopen("Profesionales.dat" , "w+b" );
-	fread(&Prof,sizeof(Profesionales),1,prof);
-	printf ("\tNombre de usuario: ");
-	_flushall();
-	gets(nombreUs);
-	printf ("\tContraseña: ");
-	_flushall();
-	gets(contra);
-	while(!feof(prof)){
-		valor=strcmp(nombreUs, Prof.UsuarioP);
-		valoR=strcmp(contra,Prof.ContraseniaP);
-		if(valor==0){
-			if(valoR==0){
-				return true;
-			}else{
-				printf("Contraseña incorrecta");
-				return false;
-			}
-			
-		}else{
-			printf("Usuario incorrecto");
-			return false;
-		}
-		fread(&Prof,sizeof(Profesionales),1,prof);
-	}	
-}
-//registrar el progreso  del paciente
 void progreso(registro reg){
 	int dniPac,valorDoc,valoRDoc,datosPa, dias,meses,ed;
 	int ani=2022;
