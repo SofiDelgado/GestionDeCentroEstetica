@@ -81,7 +81,9 @@ void Regturno (FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
 			
 			printf("Ingrese el DNI del paciente: ");
 			scanf("%d",&Turn.DNIcliente);
-			
+			printf("Ingrese el nombre y apellidodel paciente: ");
+			_flushall();
+			gets(Turn.apeynom);
 			printf("\nIngrese la fecha del turno.");
 			printf("\nIngrese el dia: ");
 			scanf("%d",&Turn.FechaATENCION.dia);
