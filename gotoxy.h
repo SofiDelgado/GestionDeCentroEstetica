@@ -1,9 +1,8 @@
-void gotoxi(int x,int y)
-{
-	HANDLE Manipulador;
-	COOR Coordenadas;
-	Manipulador = GetStdHandle(STD_PUTPUT_HANDLE);
-	Coordenadas.X=x;
-	Coordenadas.Y=y;
-	SetConsoleCursorPosition(Manipulador,Coordenadas);
+ void gotoxy(int x,int y){  
+      HANDLE hcon;  
+      hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
+      COORD dwPos;  
+      dwPos.X = x;  
+      dwPos.Y= y;  
+      SetConsoleCursorPosition(hcon,dwPos);
 }
