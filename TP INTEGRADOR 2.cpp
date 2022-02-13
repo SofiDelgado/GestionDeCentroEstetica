@@ -6,6 +6,7 @@
 #include<gotoxy.h>
 #include<Administracion.h>
 #include<Recepcion.h>
+#include<Espacios.h>
 #include<menus.h>
 #include<Login.h>
 
@@ -89,7 +90,7 @@ main(){
 		{	
 			if(permiso==3 and verificacion==true)
 			{
-			
+				MenuEspacios(prof,Prof,turn,Turn);
 			}
 			else
 			{
