@@ -1,42 +1,6 @@
-struct Recepcionista
-{
-	int IDrecep,Dni;
-	char apeynom[60],Telefono[60];
-	char UsuarioR[60],ContraseniaR[50];
-}Recep;
-
-struct Profesionales
-{
-	int IDprof,Dni;
-	char apeynom[60];
-	char Tel[25];
-	char UsuarioP[60],ContraseniaP[50];
-}Prof;
-
-struct fecha
-{
-	int dia,mes,anio;
-};
-
-struct Cliente
-{
-	char apeynom[60], Domicilio[60],Localidad[60],Telefono[25];
-	int Dni;
-	float peso;
-	fecha fechadeNacimiento;
-};Clien
-
-struct Turnos
-{
-	int IDprof,DNIcliente;
-	fecha FechaATENCION;
-	char DetalleAtencion[60];
-};Turn
-
-void Regcliente (FILE *client, Cliente Clien)
+void Regcliente(FILE *client,Cliente Clien)
 {
 	client = fopen ("Clientes.dat","ab");
-	
 	printf("\nIngrese el nombre del paciente: ");
 		_flushall();
 		gets(Clien.apeynom);
@@ -117,7 +81,9 @@ void Regturno (FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
 			
 			printf("Ingrese el DNI del paciente: ");
 			scanf("%d",&Turn.DNIcliente);
-			
+			printf("Ingrese el nombre y apellidodel paciente: ");
+			_flushall();
+			gets(Turn.apeynom);
 			printf("\nIngrese la fecha del turno.");
 			printf("\nIngrese el dia: ");
 			scanf("%d",&Turn.FechaATENCION.dia);
