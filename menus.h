@@ -139,7 +139,6 @@ void MenuRecep(FILE *client,Cliente Clien,FILE *prof, Profesionales Prof, FILE* 
 			printf("ERROR...");
 			gotoxy(49,10);
 			system("pause"); 
-			system("cls");
 	        break;
 		}
 		

@@ -130,7 +130,7 @@ void Regturno (FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
 		}
 }
 
-void Listatenc(FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
+void Listatenc(FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof) //solo lee las atenciones de un medico
 {
 		turn=fopen("Turnos.dat","rb");
 		prof=fopen("Profesionales.dat","rb");
@@ -149,9 +149,9 @@ void Listatenc(FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
 		fread(&Turn,sizeof(Turnos),1,turn);
 	    fread(&Prof,sizeof(Profesionales),1,prof);
 			while(!feof(turn)){
-				if(Turn.IDprof==Prof.IDprof)
-				{	system("color 75");	
-					marco();
+				system("color 75");
+				marco();
+				if(Turn.IDprof==Prof.IDprof){
 					gotoxy(48,3);
 					printf("====================");
 					gotoxy(48,4);
@@ -168,12 +168,10 @@ void Listatenc(FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
 					printf("%d/%d/%d",Turn.FechaATENCION.dia, Turn.FechaATENCION.mes, Turn.FechaATENCION.anio);
 					gotoxy(48,12);
 					system("pause");
-					system("cls");
 				}
+				system("cls");
 			fread(&Turn,sizeof(Turnos),1,turn);
 		    fread(&Prof,sizeof(Profesionales),1,prof);		
-			gotoxy(48,13);
-			system("pause");
 		}
 		fclose(turn);
 		fclose(prof);

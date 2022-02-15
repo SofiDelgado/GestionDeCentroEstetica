@@ -12,8 +12,8 @@ struct registro{
 }reg;
 void progreso(registro reg,FILE *turn, FILE *client)
 {
-	int valorDoc,valoRDoc,datosPa, dias,meses,ed;
-	char dniPac[50];
+	int valoRDoc,datosPa, dias,meses,ed;
+	char dniPac[50],valorDoc[50];
 	int ani=2022;
 	float pesoPac;
 	system("color 71");
@@ -39,8 +39,7 @@ void progreso(registro reg,FILE *turn, FILE *client)
 	turn= fopen ("Turnos.dat","w+b");
 	fread(&Turn,sizeof(Turnos),1,turn);
 	while(!feof(turn)){
-		valoRDoc=strcmp(dniPac,Turn.DNIcliente);
-		if(valoRDoc==0){
+		if(strcmp(dniPac,Turn.DNIcliente)==0){
 			client=fopen ("Clientes.dat","w+b");
 			fread(&Clien,sizeof(Cliente),1,client);
 				while(!feof(client)){
@@ -117,8 +116,8 @@ void ListadeEspera(FILE *turn, Turnos Turn)
 		printf("Lista de espera:");
 		int verDia, verMes,e=1;;
 		while(!feof(turn)){
-			system("color 71");
-			marco();
+					system("color 71");
+					marco();
 					reg.fec.dia=Turn.FechaATENCION.dia;
 					reg.fec.dia=verDia;
 					reg.fec.mes=Turn.FechaATENCION.mes;
@@ -136,8 +135,9 @@ void ListadeEspera(FILE *turn, Turnos Turn)
 						gotoxy(46,8);
 						printf("No hay turnos registrados para la fecha.");
 					}
-					
-				}
+				fread(&Turn,sizeof(Turnos),1,turn);	
+		}
+
 }
 void EvolucionTrat(FILE *prof, Profesionales Prof,registro reg,FILE *client,FILE *turn)
 {

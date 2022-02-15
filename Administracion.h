@@ -72,7 +72,7 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 	}
 	
 	//Entre 6 y 10 caracteres 	
-	recep=fopen("Recepcionistas.dat","a+b");
+	recep=fopen("Recepcionistas.dat","ab");
 	if(strlen(Recep.UsuarioR)>=6 and strlen(Recep.UsuarioR)<=10 and b!=1)
 	{
 		//Primera letra en minuscula
@@ -318,7 +318,7 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 
 	}
 	//Entre 6 y 10 caracteres 	
-	prof=fopen("Profesionales.dat","a+b");
+	prof=fopen("Profesionales.dat","ab");
 	if(strlen(Prof.UsuarioP)>=6 and strlen(Prof.UsuarioP)<=10 and b!=1)
 	{
 		//Primera letra en minuscula
@@ -512,7 +512,7 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 	_flushall();
 	gets(Prof.Tel);
 	gotoxy(44,8);
-	printf("Permisos: admin=1,Recepcionista=2,Profecional=3");
+	printf("Permisos: admin= 1, Recepcionista= 2, Profecional= 3 : ");
 	scanf("%d",&Prof.permisoP);
 	fwrite(&Prof,sizeof(Profesionales),1,prof);
 	}
@@ -562,6 +562,7 @@ void atenciones(FILE *turn, Turnos Turn) //errores
 	if(b==0)
 	{
 		gotoxy(46,4);
+		marco();
 		printf("No hay turnos para el mes ingresado");
 		gotoxy(46,6);
 		system("pause");
