@@ -9,8 +9,7 @@ struct Profesionales{
 	char Tel[25];
 	char UsuarioP[60],ContraseniaP[50];
 }Prof;
-struct fecha
-{
+struct fecha{
 	int dia,mes,anio;
 };
 struct Cliente{
@@ -23,22 +22,30 @@ struct Turnos{
 	fecha FechaATENCION;
 	char DetalleAtencion[60],apeynom[50],DNIcliente[50];
 }Turn;
-struct Atenciones
-{
+struct Atenciones{
 	int IDprof;
 	int cant_atenciones;
 }Aten;
 void CargarRecepcionista(FILE *recep,Recepcionista Recep)
-{
+{	
 	Recepcionista user_aux;
 	int b=0;
 	int permisos,n,min=0,may=0,dig=0,bandera=0,espacio=0,conse=0,cons=0;
 	char contra[60];
-	
 	//Validacion de usuario
-	printf("\nEL USUARIO DEBE: \n1. Comenzar con una letra minuscula.\n2. Tener al menos 2 letras mayusculas.\n3. Tener como maximo 3 digitos.\n");
-	
-	printf ("\nNombre de usuario: ");
+	do{
+	system("color 74");
+	marco();
+	gotoxy(48,4);
+	printf("EL USUARIO DEBE TENER:");
+	gotoxy(48,5);
+	printf("1. Comenzar con una letra minuscula.");
+	gotoxy(48,6);
+	printf("2. Tener al menos 2 letras mayusculas.");
+	gotoxy(48,7);
+	printf("3. Tener como maximo 3 digitos.");
+	gotoxy(48,10);
+	printf ("Nombre de usuario: ");
 	_flushall();
 	gets(Recep.UsuarioR);
 	//validar que no exista el mismo usuario
@@ -60,7 +67,8 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 	
 	if(b==1)
 	{
-		printf("\nEl Usuario ingresado ya existe, por favor ingrese otro");
+		gotoxy(48,11);
+		printf("El Usuario ingresado ya existe, por favor ingrese otro");
 	}
 	
 	//Entre 6 y 10 caracteres 	
@@ -88,36 +96,72 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 			{
 				if(dig<=3)
 				{
-					printf("\nUsuario valido");
+					gotoxy(48,12);
+					printf("Usuario valido");
+					gotoxy(48,14);
+					system("pause");
 					bandera=1;
 				}
 				else
 				{
-					printf("\nEl usuario no puede tener mas de 3 digitos");
-					printf("\nUsuario invalido");
+					gotoxy(48,12);
+					printf("El usuario no puede tener mas de 3 digitos");
+					gotoxy(48,13);
+					printf("Usuario invalido");
+					gotoxy(48,15);
+					system("pause");
 				}
 			}
 		else
 		{
-			printf("\nNo posee la cantidad minima de mayusculas deben ser al menos 2");
-			printf("\nUsuario invalido");
+			gotoxy(48,12);
+			printf("No posee la cantidad minima de mayusculas deben ser al menos 2");
+			gotoxy(48,13);
+			printf("Usuario invalido");
+			gotoxy(48,15);
+			system("pause");
 		}
 		}
 		else
 		{
-			printf("\nLa primera letra del usuario debe ser minuscula.");
-			printf("\nUsuario invalido");
+			gotoxy(48,12);
+			printf("La primera letra del usuario debe ser minuscula.");
+			gotoxy(48,13);
+			printf("Usuario invalido");
+			gotoxy(48,15);
+			system("pause");
 		}
 	}
 		else
 		{
-			printf("\nLa cantidad de caracteres debe ser de 6 a 10");
-			printf("\nUsuario invalido\n");
+			gotoxy(48,12);
+			printf("La cantidad de caracteres debe ser de 6 a 10");
+			gotoxy(48,13);
+			printf("Usuario invalido");
+			gotoxy(48,15);
+			system("pause");
 		}
-	
-	if(bandera==1)
-	{
-		printf("\nIngrese la contrasenia: ");
+		system("cls");
+	}while(bandera!=1);
+	//contraseña
+	do{
+		system("color 74");
+		marco();
+	if(bandera==1){
+		gotoxy(45,4);
+		printf("LA CONTRASEÑA DEBE TENER: ");
+		gotoxy(45,5);
+		printf("1. Al menos una letra mayuscula, una letra minuscula y un numero.");
+		gotoxy(45,6);
+		printf("2.Solo caracteres alfanumericos.");
+		gotoxy(45,7);
+		printf("3. Debera tener entre 6 y 32 caracteres.");
+		gotoxy(45,8);
+		printf("4. No debe tener más de 3 caracteres numericos consecutivos.");
+		gotoxy(45,9);
+		printf("5. No debe tener 2 letras alfabéticamente consecutivas.");
+		gotoxy(45,11);
+		printf("Ingrese la contrasenia: ");
 		_flushall();
 		gets(Recep.ContraseniaR);
 		if(strlen(Recep.ContraseniaR)>=6 and strlen(Recep.ContraseniaR)<=32)
@@ -126,12 +170,18 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 			{
 				if(Recep.ContraseniaR[i]>=40 and Recep.ContraseniaR[i]<=47 or Recep.ContraseniaR[i]>=58 and Recep.ContraseniaR[i]<=63 or Recep.ContraseniaR[i]>=90 and Recep.ContraseniaR[i]<=96 or Recep.ContraseniaR[i]>=123 and Recep.ContraseniaR[i]<=126 or Recep.ContraseniaR[i]==239)
 				{
-					printf("\nLa contrasenia no puede contener signos de puntuacion o acentos");
+					gotoxy(48,13);
+					printf("La contrasenia no puede contener signos de puntuacion o acentos");
+					gotoxy(45,15);
+					system("pause");
 				}
 				else if(Recep.ContraseniaR[i]==' ')
 				{
 					espacio=espacio+1;
-					printf("\nLa contrasenia no debe tener espacios");
+					gotoxy(48,13);
+					printf("La contrasenia no debe tener espacios");
+					gotoxy(45,15);
+					system("pause");
 				}
 				
 				if(Recep.ContraseniaR[i]>=48 and Recep.ContraseniaR[i]<=57)
@@ -158,41 +208,62 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 				{
 					if(cons<1)
 					{
-						printf("\nContrasenia valida");
+						gotoxy(45,13);
+						printf("Contrasenia valida");
+						gotoxy(45,15);
+						system("pause");
 						bandera=2;
 					}
 					else
 					{
-						printf("\nLa contrasenia no puede tener dos letras seguidas");
+						gotoxy(48,13);
+						printf("La contrasenia no puede tener dos letras seguidas");
+						gotoxy(45,15);
+						system("pause");
 					}
 				}
 				else
-				printf("\nLa contrasenia no debe tener mas de 4 numeros consecutivos");
+				{
+				gotoxy(48,13);
+				printf("La contrasenia no debe tener mas de 4 numeros consecutivos");
+				gotoxy(45,15);
+				system("pause");
+				}
 			}
 		}
 		else
 		{
-			printf("\nLa Contrasenia debe tener entre 6 y 32 caracteres");
+	
+			gotoxy(48,13);
+			printf("La Contrasenia debe tener entre 6 y 32 caracteres");
+			gotoxy(45,15);
+			system("pause");
 		}
 	}
-
-	if(bandera==2)
-	{
+	system("cls");
+	}while(bandera!=2);
+	//ingreso datos del usuario
+	if(bandera==2){
+		gotoxy(44,3);
+		printf("USUARIO: %s",Recep.UsuarioR);
 		srand(time(NULL));
 		Recep.IDrecep = 1+rand()%201;//le damos un id aleatorio
+		gotoxy(44,5);
 		printf("Ingrese nombre y apellido: ");
 	   	_flushall();
 	    gets(Recep.apeynom);
+	    gotoxy(44,6);
 	    printf("Ingrese el DNI: ");
 	    scanf("%d", &Recep.Dni);
+	    gotoxy(44,7);
 	    printf("Ingrese el telefono: ");
 	    _flushall();
 	    gets(Recep.Tel);
+	    gotoxy(44,8);
 	    printf("Permisos: admin=1,Recepcionista=2,Profecional=3");
 	    scanf("%d",&Recep.permisoR);
 		fwrite(&Recep,sizeof(Recepcionista),1,recep);
 	}
-
 	fclose(recep);
 }
 void CargarProfesional(FILE *prof,Profesionales Prof)
@@ -203,12 +274,23 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 	char contra[60];
 	
 	//Validacion de usuario
-	printf("\nEL USUARIO DEBE: \n1. Comenzar con una letra minuscula.\n2. Tener al menos 2 letras mayusculas.\n3. Tener como maximo 3 digitos.\n");
-	
-	printf ("\nNombre de usuario: ");
+	do{
+	system("color 74");
+	marco();
+	gotoxy(48,4);
+	printf("EL USUARIO DEBE TENER:");
+	gotoxy(48,5);
+	printf("1. Comenzar con una letra minuscula.");
+	gotoxy(48,6);
+	printf("2. Tener al menos 2 letras mayusculas.");
+	gotoxy(48,7);
+	printf("3. Tener como maximo 3 digitos.");
+	gotoxy(48,10);
+	printf ("Nombre de usuario: ");
 	_flushall();
 	gets(Prof.UsuarioP);
 	//validar que no exista el mismo usuario
+	
 	prof=fopen("Profesionales.dat","rb");
 	
 	if(prof!=NULL)
@@ -227,9 +309,10 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 	
 	if(b==1)
 	{
-		printf("\nEl Usuario ingresado ya existe, por favor ingrese otro");
+		gotoxy(48,11);
+		printf("El Usuario ingresado ya existe, por favor ingrese otro");
+
 	}
-	
 	//Entre 6 y 10 caracteres 	
 	prof=fopen("Profesionales.dat","ab");
 	if(strlen(Prof.UsuarioP)>=6 and strlen(Prof.UsuarioP)<=10 and b!=1)
@@ -255,50 +338,93 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 			{
 				if(dig<=3)
 				{
-					printf("\nUsuario valido");
+					gotoxy(48,12);
+					printf("Usuario valido");
+					gotoxy(48,14);
+					system("pause");
 					bandera=1;
 				}
 				else
 				{
-					printf("\nEl usuario no puede tener mas de 3 digitos");
-					printf("\nUsuario invalido");
+					gotoxy(48,12);
+					printf("El usuario no puede tener mas de 3 digitos");
+					gotoxy(48,14);
+					printf("Usuario invalido");
+					gotoxy(48,16);
+					system("pause");
 				}
 			}
 		else
 		{
-			printf("\nNo posee la cantidad minima de mayusculas deben ser al menos 2");
-			printf("\nUsuario invalido");
+			gotoxy(48,12);
+			printf("No posee la cantidad minima de mayusculas deben ser al menos 2");
+			gotoxy(48,14);
+			printf("Usuario invalido\n");
+			gotoxy(48,16);
+			system("pause");
 		}
 		}
 		else
 		{
-			printf("\nLa primera letra del usuario debe ser minuscula.");
-			printf("\nUsuario invalido");
+			gotoxy(48,12);
+			printf("La primera letra del usuario debe ser minuscula.");
+			gotoxy(48,14);
+			printf("Usuario invalido\n");
+			gotoxy(48,16);
+			system("pause");
 		}
 	}
 		else
 		{
-			printf("\nLa cantidad de caracteres debe ser de 6 a 10");
-			printf("\nUsuario invalido\n");
+			gotoxy(48,12);
+			printf("La cantidad de caracteres debe ser de 6 a 10");
+			gotoxy(48,14);
+			printf("Usuario invalido\n");
+			gotoxy(48,16);
+			system("pause");
 		}
-	
+	system("cls");
+	}while(bandera!=1);
+	//CONTRASEÑA	
+	do{
+	system("color 74");
+	marco();
 	if(bandera==1)
 	{
-		printf("\nIngrese la contrasenia: ");
-		_flushall();
-		gets(Prof.ContraseniaP);
+	gotoxy(45,4);
+	printf("LA CONTRASEÑA DEBE TENER: ");
+	gotoxy(45,5);
+	printf("1. Al menos una letra mayuscula, una letra minuscula y un numero.");
+	gotoxy(45,6);
+	printf("2.Solo caracteres alfanumericos.");
+	gotoxy(45,7);
+	printf("3. Debera tener entre 6 y 32 caracteres.");
+	gotoxy(45,8);
+	printf("4. No debe tener más de 3 caracteres numericos consecutivos.");
+	gotoxy(45,9);
+	printf("5. No debe tener 2 letras alfabéticamente consecutivas.");
+	gotoxy(45,11);
+	printf("Ingrese la contrasenia: ");
+	_flushall();
+	gets(Prof.ContraseniaP);
 		if(strlen(Prof.ContraseniaP)>=6 and strlen(Prof.ContraseniaP)<=32)
 		{
 			for(int i=0;i<=Prof.ContraseniaP[i];i++)
 			{
 				if(Prof.ContraseniaP[i]>=40 and Prof.ContraseniaP[i]<=47 or Prof.ContraseniaP[i]>=58 and Prof.ContraseniaP[i]<=63 or Prof.ContraseniaP[i]>=90 and Prof.ContraseniaP[i]<=96 or Prof.ContraseniaP[i]>=123 and Prof.ContraseniaP[i]<=126 or Prof.ContraseniaP[i]==239)
 				{
-					printf("\nLa contrasenia no puede contener signos de puntuacion o acentos");
+					gotoxy(45,13);
+					printf("La contrasenia no puede contener signos de puntuacion o acentos");
+					gotoxy(45,15);
+					system("pause");
 				}
 				else if(Prof.ContraseniaP[i]==' ')
 				{
 					espacio=espacio+1;
-					printf("\nLa contrasenia no debe tener espacios");
+					gotoxy(45,13);
+					printf("La contrasenia no debe tener espacios");
+					gotoxy(45,15);
+					system("pause");
 				}
 				
 				if(Prof.ContraseniaP[i]>=48 and Prof.ContraseniaP[i]<=57)
@@ -325,79 +451,126 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 				{
 					if(cons<1)
 					{
-						printf("\nContrasenia valida");
+						gotoxy(45,13);
+						printf("Contrasenia valida");
+						gotoxy(45,15);
+						system("pause");
 						bandera=2;
 					}
 					else
 					{
-						printf("\nLa contrasenia no puede tener dos letras seguidas");
+						gotoxy(45,13);
+						printf("La contrasenia no puede tener dos letras seguidas");
+						gotoxy(45,15);
+						system("pause");
 					}
 				}
 				else
-				printf("\nLa contrasenia no debe tener mas de 4 numeros consecutivos");
+				{
+					if(conse>=4)
+					{				
+					gotoxy(45,14);
+					printf("La contrasenia no debe tener mas de 4 numeros consecutivos");
+					gotoxy(45,16);
+					system("pause");
+					}
+				}
 			}
 		}
 		else
 		{
-			printf("\nLa Contrasenia debe tener entre 6 y 32 caracteres");
+			gotoxy(45,13);
+			printf("La Contrasenia debe tener entre 6 y 32 caracteres");
+			gotoxy(45,15);
+			system("pause");
 		}
 	}
-
+	system("cls");
+	}while(bandera!=2);
+ 	//ingreso datos del usuario
 	if(bandera==2)
 	{
-		srand(time(NULL));
-		Prof.IDprof = 1+rand()%201;//le damos un id aleatorio , faltaria validacion de que no existe previamente.
-		printf("Ingrese nombre y apellido: ");
-	   	_flushall();
-	    gets(Prof.apeynom);
-	    printf("Ingrese el DNI: ");
-	    scanf("%d", &Prof.Dni);
-	    printf("Ingrese el telefono: ");
-	    _flushall();
-	    gets(Prof.Tel);
-	    printf("Permisos: admin=1,Recepcionista=2,Profecional=3");
-	    scanf("%d",&Prof.permisoP);
-		fwrite(&Prof,sizeof(Profesionales),1,prof);
+	system("color 74");
+	marco();
+	gotoxy(44,3);
+	printf("USUARIO: %s",Prof.UsuarioP);
+	srand(time(NULL));
+	Prof.IDprof = 1+rand()%201;//le damos un id aleatorio , faltaria validacion de que no existe previamente.
+	gotoxy(44,5);
+	printf("Ingrese nombre y apellido: ");
+	_flushall();
+	gets(Prof.apeynom);
+	gotoxy(44,6);
+    printf("Ingrese el DNI: ");
+	scanf("%d", &Prof.Dni);
+	gotoxy(44,7);
+	printf("Ingrese el telefono: ");
+	_flushall();
+	gets(Prof.Tel);
+	gotoxy(44,8);
+	printf("Permisos: admin=1,Recepcionista=2,Profecional=3");
+	scanf("%d",&Prof.permisoP);
+	fwrite(&Prof,sizeof(Profesionales),1,prof);
 	}
 
 	fclose(prof);
 	
 }
-void atenciones(FILE *turn, Turnos Turn)
+void atenciones(FILE *turn, Turnos Turn) //errores
 {
+	system("color 74");
+	marco();
+	
 	int mes,b=0;
 	turn=fopen("Turnos.dat","rb");
-	printf("\nIngrese el mes para mostrar las atenciones: ");
+	
+	gotoxy(40,3);
+	printf("Ingrese el mes para mostrar las atenciones: ");
 	scanf("%d",&mes);
+	
 	fread(&Turn,sizeof(Turnos),1,turn);
 	while(!feof(turn))
 	{
+		marco();
 		if(mes==Turn.FechaATENCION.mes)
 		{
-		b=1;
-		printf("\nFecha\n");
-		printf("\nDia: %d",Turn.FechaATENCION.dia);
-		printf("\nMes: %d",Turn.FechaATENCION.mes);
-		printf("\nAnio: %d",Turn.FechaATENCION.anio);
-		printf("\nDNI del paciente: %s",Turn.DNIcliente);
-		printf("\nDetalles de atencion: %s\n",Turn.DetalleAtencion);
-		printf("===========================================\n");
+			b=1;
+			gotoxy(40,4);
+			printf("Fecha:");
+			gotoxy(47,4);
+			printf("%d/",Turn.FechaATENCION.dia);
+			gotoxy(51,4);
+			printf("%d/",Turn.FechaATENCION.mes);
+			gotoxy(55,4);
+			printf("%d",Turn.FechaATENCION.anio);
+			gotoxy(40,5);
+			printf("DNI del paciente: %s",Turn.DNIcliente);
+			gotoxy(40,7);
+			printf("Detalles de atencion: %s\n",Turn.DetalleAtencion);
+			gotoxy(46,10);
+			system("pause");
+			system("cls");
+			gotoxy(46,4);
 		}
 		fread(&Turn,sizeof(Turnos),1,turn);
 	}
 	fclose(turn);
 	if(b==0)
 	{
-		printf("\nNo hay turnos para el mes ingresado\n");
+		gotoxy(46,4);
+		printf("No hay turnos para el mes ingresado");
+		gotoxy(46,6);
+		system("pause");
 	}
 
-	
+														 
 }
-	
-void ranking()
+void ranking(Profesionales Prof,Turnos Turn,Atenciones Aten)
 {
+	system("color 74");
+	marco();
+	
 	FILE *arch;
-    
 	Profesionales reg_med[50];
 	Turnos reg_turnos[50];
 	Atenciones reg_atenciones[50],aux;
@@ -410,8 +583,13 @@ void ranking()
 
     if (arch==NULL)
     {
-        printf("\nEl archivo 'Profesionales.dat' no fue creado o se elimino, contacte con soporte.");
+    system("color 74");
+	marco();
+    	gotoxy(30,5);
+        printf("El archivo 'Profesionales.dat' no fue creado o se elimino, contacte con soporte.");
 		band = false;
+		gotoxy(30,8);
+		system("pause");
     }
     else
     {
@@ -431,8 +609,14 @@ void ranking()
 
     if (arch==NULL)
     {
-        printf("\nEl archivo 'Turnos.dat' no fue creado o se elimino, contacte con soporte.");
+    system("color 74");
+	marco();
+    	gotoxy(30,6);
+        printf("El archivo 'Turnos.dat' no fue creado o se elimino, contacte con soporte.");
 		band = false;
+		gotoxy(30,8);
+		system("pause");
+		
     }
     else
     {
@@ -487,31 +671,120 @@ void ranking()
 		//Muestra el ranking de Medicos:
 		for (i = 0; i < num_meds; i++)
 		{
-			printf("\nPuesto %d:",i+1);
-			printf("\nID: %d",reg_atenciones[i].IDprof);
-			printf("\nNombre y apellido: %s",reg_med[i].apeynom);
-			printf("\nCantidad de atenciones: %d",reg_atenciones[i].cant_atenciones);
-			printf("\n--------------------------------\n");
+			gotoxy(46,4);
+			printf("Puesto %d:",i+1);
+			gotoxy(46,5);
+			printf("ID: %d",reg_atenciones[i].IDprof);
+			gotoxy(46,6);
+			printf("Nombre y apellido: %s",reg_med[i].apeynom);
+			gotoxy(46,7);
+			printf("Cantidad de atenciones: %d",reg_atenciones[i].cant_atenciones);
+			gotoxy(46,8);
+			system("pause");
+			system("cls");
+			gotoxy(46,4);			
 		}
 		
 	}
 	
 }
-void ver(FILE *prof,Profesionales Prof)
+void ver(FILE *prof,Profesionales Prof,FILE *recep, Recepcionista Recep)
 {
-	printf("VER");
+	gotoxy(48,3);
+	printf("Profesionales");
 	prof = fopen ("Profesionales.dat","a+b");
 	fread(&Prof,sizeof(Profesionales),1,prof);
-
-		while(!feof(prof))
+	
+	while(!feof(prof))
+	{
+	system("color 74");
+	marco();
+		gotoxy(48,5);
+		printf("ID profesional: %d",Prof.IDprof);
+		gotoxy(48,6);
+		printf("Nombre y apellido: %s", Prof.apeynom);
+		gotoxy(48,7);
+		printf("DNI: %d", Prof.Dni);
+		gotoxy(48,8);
+		printf("Telefono: %s", Prof.Tel);
+		gotoxy(48,9);
+		printf("Usuario: %s",Prof.UsuarioP);
+		gotoxy(48,10);
+		printf("Contrasenia: %s",Prof.ContraseniaP);
+		gotoxy(48,11);
+		printf("Permiso: ");
+		if(Prof.permisoP==1)
 		{
-		printf("\nNombre y apellido: %s", Prof.apeynom);
-		printf("\nDNI: %d", Prof.Dni);
-		printf("\nTelefono: %s", Prof.Tel);
-		printf("\nUsuario: %s",Prof.UsuarioP);
-		printf("\nContrasenia: %s",Prof.ContraseniaP);
-		fread(&Prof,sizeof(Profesionales),1,prof);
+			printf("Administracion");
 		}
-
+		else
+		{
+			if(Prof.permisoP==2)
+			{
+				printf("Recepcionista");
+			}
+			else
+			{
+				if(Prof.permisoP==3)
+				{
+					printf("Espacios");
+				}
+			}
+		}
+		fread(&Prof,sizeof(Profesionales),1,prof);
+		gotoxy(48,13);
+		system("pause");
+		system("cls");
+		gotoxy(48,3);
+		}
 	fclose(prof);
+	
+	gotoxy(48,3);
+	printf("Recepcionistas");
+	recep = fopen ("Recepcionistas.dat","a+b");
+	fread(&Recep,sizeof(Recepcionista),1,recep);
+
+	while(!feof(recep))
+	{
+	system("color 74");
+	marco();
+		gotoxy(48,5);
+		printf("ID: %d",Recep.IDrecep);
+		gotoxy(48,6);
+		printf("Nombre y apellido: %s",Recep.apeynom);
+		gotoxy(48,7);
+		printf("DNI: %d", Recep.Dni);
+		gotoxy(48,8);
+		printf("Telefono: %s", Recep.Tel);	
+		gotoxy(48,9);
+		printf("Usuario: %s",Recep.UsuarioR);
+		gotoxy(48,10);
+		printf("Contrasenia: %s",Recep.ContraseniaR);
+		gotoxy(48,11);
+		printf("Permiso: ");
+		if(Recep.permisoR==1)
+		{
+			printf("Administracion");
+		}
+		else
+		{
+			if(Recep.permisoR==2)
+			{
+				printf("Recepcionista");
+			}
+			else
+			{
+				if(Recep.permisoR==3)
+				{
+					printf("Espacios");
+				}
+			}
+		}
+		fread(&Recep,sizeof(Recepcionista),1,recep);
+		gotoxy(48,13);
+		system("pause");
+		system("cls");
+		gotoxy(48,3);
+		}
+	fclose(recep);
 }

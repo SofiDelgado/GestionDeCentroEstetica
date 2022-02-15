@@ -1,51 +1,118 @@
-void MenuAdmin(FILE *arch,Profesionales Prof,Recepcionista Recep)
+void MenuAdmin(FILE *arch,Profesionales Prof,FILE *recep,Recepcionista Recep,Atenciones Aten,FILE *turn,Turnos Turn)
 {
-	int op;
-	int a;
+	int op,a,j;
+
+	  
 	do{
-	printf("\nADMINISTRACION");
-	printf("\n1)Registrar profesional");
-	printf("\n2)Registrar Usuario Recepcionista");
-	printf("\n3)Atenciones por Profesional");
-	printf("\n4)Ranking de Profesionales por Atenciones");
-	printf("\n5)ver profecionales");
-	printf("\n6)Salir\nOpcion: ");
-	scanf("%d", &op);
+		system("color 74");
+		//marco
+		for (j=1; j < 120; j++) {
+		gotoxy(j, 1);
+		printf("%c", 177);
+		gotoxy(j, 24);
+		printf("%c",177);
+		}
+		int d;
+		for (d = 2; d < 24; d++) {
+		gotoxy(1, d);
+		printf("%c", 179);
+		gotoxy(119, d);
+		printf("%c", 179);
+		}
+		gotoxy(1, 1);
+		printf("%c", 223);
+		gotoxy(119, 1);
+		printf("%c",223);
+		gotoxy(1, 24);
+		printf("%c", 223);
+		gotoxy(119, 24);
+		printf("%c", 223);
+		//fin marco
+		gotoxy(44,2);
+		printf("=======================");
+		gotoxy(44,3);
+		printf("MODULO ADMINISTRACION");
+		gotoxy(44,4);
+		printf("=======================");
+		gotoxy(44,6);
+		printf("1.-Registrar profesional");
+		gotoxy(44,7);
+		printf("2.-Registrar Usuario Recepcionista");
+		gotoxy(44,8);
+		printf("3.-Atenciones por Profesional");
+		gotoxy(44,9);
+		printf("4.-Ranking de Profesionales por Atenciones");
+		gotoxy(44,10);
+		printf("5.-ver usuarios registrados");
+		gotoxy(44,11);
+		printf("6.-Salir");
+		gotoxy(44,12);
+		printf("Opcion: ");
+		scanf("%d", &op);
 	switch(op)
 	{
 		case 1:
 		system("cls");
 		CargarProfesional(arch,Prof);
+		system("cls");
 		break;
 		case 2:
 		system("cls");
 		CargarRecepcionista(arch,Recep);
+		system("cls");
 		break;
-		case 3: break;
-		case 4: break;
+		case 3:
+		system("cls");
+		atenciones(turn,Turn);
+		system("cls");
+		break;
+		case 4:
+		system("cls");
+		ranking(Prof,Turn,Aten);
+		system("cls");
+		break;
 		case 5:
 		system("cls");
-		ver(arch,Prof);
+		ver(arch,Prof,recep,Recep);
+		system("cls");
 		break;
-		case 6: break;
-		default: printf("\nERROR...\n"); break;
+		case 6: 
+		break;
+		default:
+		gotoxy(49,9);
+		printf("ERROR...");
+		gotoxy(49,10);
+		system("pause"); 
+		system("cls");
+		break;
 	}
 	}while(op!=6);
 	
 }
-void MenuRecep(FILE *client,Cliente Clien,FILE *prof, Profesionales Prof, FILE* turn, Turnos Turn)
+void MenuRecep(FILE *client,Cliente Clien,FILE *prof, Profesionales Prof, FILE* turn, Turnos Turn,Atenciones Aten)
 {
 	int Opc;
 	
 	do
 	{
-		printf("Modulo del recepcionista\n");
-		printf("==========================");
-		printf("\n1.- Registrar Cliente");
-		printf("\n2.- Registrar Turno");
-		printf("\n3.- Listado de Atenciones por Profesional y Fecha\n");
-		printf("\n4.- Cerrar la aplicacion.\n");
-		printf("Ingrese una opcion: _");
+		system("color 75");
+		marco();
+		gotoxy(44,2);
+		printf("=====================");
+		gotoxy(44,3);
+		printf("MODULO RECEPCIONISTA");
+		gotoxy(44,4);
+		printf("=====================");
+		gotoxy(44,6);
+		printf("1.-Registrar Cliente");
+		gotoxy(44,7);
+		printf("2.-Registrar Turno");
+		gotoxy(44,8);
+		printf("3.-Listado de Atenciones por Profesional y Fecha");
+		gotoxy(44,9);
+		printf("4.-Cerrar la aplicacion.");
+		gotoxy(44,10);
+		printf("Ingrese una opcion: ");
 		scanf("%d", &Opc);
 		
 		switch(Opc)
@@ -53,57 +120,76 @@ void MenuRecep(FILE *client,Cliente Clien,FILE *prof, Profesionales Prof, FILE* 
 			case 1:
 			system("CLS");
 			Regcliente(client,Clien);
+			system("CLS");
 			break;
-	        
 	        case 2:
 	        system("CLS");
 	        Regturno(turn, Turn, prof, Prof);
+	        system("CLS");
 	        break;
-	        
 	        case 3:
 	        system("CLS");
-	        Listatenc(turn, Turn, prof, Prof);	
-	        
+	        Listatenc(turn, Turn, prof, Prof);
+			system("CLS");
 	        case 4:
-	        system("CLS");
-	        printf("Saliendo de la aplicacion...");
 	        break;
-	        
 	        default:
-	        printf("Error, ingrese una opcion valida.");
+	        gotoxy(49,9);
+			printf("ERROR...");
+			gotoxy(49,10);
+			system("pause"); 
+			system("cls");
 	        break;
-	        
 		}
 		
 	}while(Opc!=4);
 }
 
-void MenuEspacios (FILE *prof,Profesionales Prof,FILE *turn,Turnos Turn)
+void MenuEspacios (FILE *prof,Profesionales Prof,FILE *turn,Turnos Turn, FILE *client)
 {
+	int op;
+	char rep=true;
 	do{
-		printf ("\n\tModulo Espacios");
-			printf("\n\t--------------\n");
-			printf ("\n\t\t1.- Visualizar Lista de Espera de Turnos");
-			printf ("\n\t\t2.- Registrar Evolución del tratamiento");
-			printf ("\n\t\t3.- Cerrar la aplicacion.");
-			printf ("\nIngrese la opcion: ");
-			scanf("%d",&op);
+		system("color 71");
+		marco();
+		gotoxy(44,2);
+		printf("=====================");
+		gotoxy(44,3);
+		printf ("MODULO ESPACIOS");
+		gotoxy(44,4);
+		printf("=====================");
+		gotoxy(44,6);
+		printf ("1.-Visualizar Lista de Espera de Turnos");
+		gotoxy(44,7);
+		printf ("2.-Registrar Evolución del tratamiento");
+		gotoxy(44,8);
+		printf ("3.-Cerrar la aplicacion.");
+		gotoxy(44,9);
+		printf ("Ingrese la opcion: ");
+		scanf("%d",&op);
 
 	switch(op){
 		case 1:
-			ListadeEspera(turn,Turn);	
+			system("CLS");
+			ListadeEspera(turn,Turn);
+			system("CLS");	
 			break;						
 		case 2:
+			system("CLS");
 			EvolucionTrat(prof,Prof,reg,client,turn);
 			system("PAUSE");
+			system("CLS");
 			break;
 		case 3:
-			rep=false;
+
             break;
 		default:
-			printf("\n La opcion elegida no pertence al menu. Por favor elija una de las opciones del menu. Gracias...\n");
-		    	system ("PAUSE");
-			break;
+			gotoxy(49,9);
+			printf("ERROR...");
+			gotoxy(49,10);
+			system("pause"); 
+			system("cls");
+		break;
 	}
 	}while(rep==true);
 
