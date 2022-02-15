@@ -134,6 +134,7 @@ void MenuRecep(FILE *client,Cliente Clien,FILE *prof, Profesionales Prof, FILE* 
 	        case 4:
 	        break;
 	        default:
+	        system("cls");
 	        gotoxy(49,9);
 			printf("ERROR...");
 			gotoxy(49,10);
@@ -184,6 +185,7 @@ void MenuEspacios (FILE *prof,Profesionales Prof,FILE *turn,Turnos Turn, FILE *c
 
             break;
 		default:
+			system("cls");
 			gotoxy(49,9);
 			printf("ERROR...");
 			gotoxy(49,10);

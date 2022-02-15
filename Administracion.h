@@ -72,7 +72,7 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 	}
 	
 	//Entre 6 y 10 caracteres 	
-	recep=fopen("Recepcionistas.dat","ab");
+	recep=fopen("Recepcionistas.dat","a+b");
 	if(strlen(Recep.UsuarioR)>=6 and strlen(Recep.UsuarioR)<=10 and b!=1)
 	{
 		//Primera letra en minuscula
@@ -110,6 +110,7 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 					printf("Usuario invalido");
 					gotoxy(48,15);
 					system("pause");
+					dig=0;
 				}
 			}
 		else
@@ -196,7 +197,7 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 				{
 					if(Recep.ContraseniaR[i]+1==Recep.ContraseniaR[i+1])
 					{
-						cons=cons+1;//Letras seguidas
+						cons=cons+1;//Letras seguidas consecutivas
 					}
 				}
 		
@@ -217,17 +218,20 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 					else
 					{
 						gotoxy(48,13);
-						printf("La contrasenia no puede tener dos letras seguidas");
+						printf("La contrasenia no puede tener dos letras seguidas consecutivas");
 						gotoxy(45,15);
 						system("pause");
 					}
 				}
 				else
 				{
-				gotoxy(48,13);
-				printf("La contrasenia no debe tener mas de 4 numeros consecutivos");
-				gotoxy(45,15);
-				system("pause");
+					if(conse>=4)
+					{
+						gotoxy(48,13);
+						printf("La contrasenia no debe tener mas de 4 numeros consecutivos");
+						gotoxy(45,15);
+						system("pause");
+					}
 				}
 			}
 		}
@@ -314,7 +318,7 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 
 	}
 	//Entre 6 y 10 caracteres 	
-	prof=fopen("Profesionales.dat","ab");
+	prof=fopen("Profesionales.dat","a+b");
 	if(strlen(Prof.UsuarioP)>=6 and strlen(Prof.UsuarioP)<=10 and b!=1)
 	{
 		//Primera letra en minuscula
@@ -671,6 +675,8 @@ void ranking(Profesionales Prof,Turnos Turn,Atenciones Aten)
 		//Muestra el ranking de Medicos:
 		for (i = 0; i < num_meds; i++)
 		{
+			system("color 74");
+			marco();
 			gotoxy(46,4);
 			printf("Puesto %d:",i+1);
 			gotoxy(46,5);

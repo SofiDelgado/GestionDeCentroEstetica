@@ -1,5 +1,4 @@
-void Regcliente(FILE *client,Cliente Clien)
-{
+void Regcliente(FILE *client,Cliente Clien){
 	system("color 75");
 	marco();
 	
@@ -149,8 +148,7 @@ void Listatenc(FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
 		{
 		fread(&Turn,sizeof(Turnos),1,turn);
 	    fread(&Prof,sizeof(Profesionales),1,prof);
-			while(!feof(turn))
-			{
+			while(!feof(turn)){
 				if(Turn.IDprof==Prof.IDprof)
 				{	system("color 75");	
 					marco();
@@ -170,14 +168,15 @@ void Listatenc(FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
 					printf("%d/%d/%d",Turn.FechaATENCION.dia, Turn.FechaATENCION.mes, Turn.FechaATENCION.anio);
 					gotoxy(48,12);
 					system("pause");
+					system("cls");
 				}
-				fread(&Turn,sizeof(Turnos),1,turn);
-		    	fread(&Prof,sizeof(Profesionales),1,prof);		
-		    	system("cls");
-		    	system("pause");
-			}
-			fclose(turn);
-			fclose(prof);
+			fread(&Turn,sizeof(Turnos),1,turn);
+		    fread(&Prof,sizeof(Profesionales),1,prof);		
+			gotoxy(48,13);
+			system("pause");
+		}
+		fclose(turn);
+		fclose(prof);
 	}
 	
 

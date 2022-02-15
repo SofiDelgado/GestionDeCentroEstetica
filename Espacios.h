@@ -103,7 +103,7 @@ void ListadeEspera(FILE *turn, Turnos Turn)
 {
 	system("color 71");
 	marco();
-		turn=fopen( "Profesionales.dat" , "w+b" );
+		turn=fopen( "Profesionales.dat" , "rb" );
 		fread(&Turn,sizeof(Turnos),1,turn);
 		gotoxy(46,4);
 		printf("Ingrese la fecha(2022)");
@@ -117,8 +117,12 @@ void ListadeEspera(FILE *turn, Turnos Turn)
 		printf("Lista de espera:");
 		int verDia, verMes,e=1;;
 		while(!feof(turn)){
-					verDia=reg.fec.dia=Turn.FechaATENCION.dia;
-					verMes=reg.fec.mes=Turn.FechaATENCION.mes;
+			system("color 71");
+			marco();
+					reg.fec.dia=Turn.FechaATENCION.dia;
+					reg.fec.dia=verDia;
+					reg.fec.mes=Turn.FechaATENCION.mes;
+					reg.fec.mes=verMes;
 					if(verDia ==0 && verMes==0){
 						while(!feof(turn)){
 							gotoxy(46,8);

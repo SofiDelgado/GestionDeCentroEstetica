@@ -36,7 +36,6 @@ main(){
 	FILE*turn;
 	int op,j;
 	int permiso;
-	 
 	do{
 		bool verificacion=false;
 		system("color 70");
