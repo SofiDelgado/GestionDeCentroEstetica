@@ -36,6 +36,7 @@ main(){
 	FILE*turn;
 	int op,j;
 	int permiso;
+	MenuAdmin(prof,Prof,recep,Recep,Aten,turn,Turn);
 	do{
 		bool verificacion=false;
 		system("color 70");
@@ -58,7 +59,6 @@ main(){
 			case 1:
 			system("cls");
 			login(prof,recep,Prof,Recep,permiso,verificacion);
-			//MENUS
 			if(permiso==1 and verificacion==true)
 			{
 				system("cls");
@@ -76,7 +76,7 @@ main(){
 					if(permiso==3 and verificacion==true)
 					{
 						system("cls");
-						MenuEspacios(prof,Prof,turn,Turn,client);
+						MenuEspacios(prof,Prof,turn,Turn,client,Clien);
 					}
 					else
 					{
