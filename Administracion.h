@@ -26,8 +26,7 @@ struct Atenciones{
 	int IDprof;
 	int cant_atenciones;
 }Aten;
-void CargarRecepcionista(FILE *recep,Recepcionista Recep)
-{	
+void CargarRecepcionista(FILE *recep,Recepcionista Recep){	
 	Recepcionista user_aux;
 	int b=0;
 	int permisos,n,min=0,may=0,dig=0,bandera=0,espacio=0,conse=0,cons=0;
@@ -72,7 +71,7 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 	}
 	
 	//Entre 6 y 10 caracteres 	
-	recep=fopen("Recepcionistas.dat","ab");
+	recep=fopen("Recepcionistas.dat","rb");
 	if(strlen(Recep.UsuarioR)>=6 and strlen(Recep.UsuarioR)<=10 and b!=1)
 	{
 		//Primera letra en minuscula
@@ -145,87 +144,85 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 		system("cls");
 	}while(bandera!=1);
 	//contraseña
-	do{
-		system("color 74");
-		marco();
-	if(bandera==1){
-		gotoxy(45,4);
-		printf("LA CONTRASEÑA DEBE TENER: ");
-		gotoxy(45,5);
-		printf("1. Al menos una letra mayuscula, una letra minuscula y un numero.");
-		gotoxy(45,6);
-		printf("2.Solo caracteres alfanumericos.");
-		gotoxy(45,7);
-		printf("3. Debera tener entre 6 y 32 caracteres.");
-		gotoxy(45,8);
-		printf("4. No debe tener más de 3 caracteres numericos consecutivos.");
-		gotoxy(45,9);
-		printf("5. No debe tener 2 letras alfabéticamente consecutivas.");
-		gotoxy(45,11);
-		printf("Ingrese la contrasenia: ");
-		_flushall();
-		gets(Recep.ContraseniaR);
-		if(strlen(Recep.ContraseniaR)>=6 and strlen(Recep.ContraseniaR)<=32)
-		{
-			for(int i=0;i<=Recep.ContraseniaR[i];i++)
+	if(bandera==1)
+	{
+		do{
+			system("color 74");
+			marco();
+			gotoxy(45,4);
+			printf("LA CONTRASEÑA DEBE TENER: ");
+			gotoxy(45,5);
+			printf("1. Al menos una letra mayuscula, una letra minuscula y un numero.");
+			gotoxy(45,6);
+			printf("2.Solo caracteres alfanumericos.");
+			gotoxy(45,7);
+			printf("3. Debera tener entre 6 y 32 caracteres.");
+			gotoxy(45,8);
+			printf("4. No debe tener más de 3 caracteres numericos consecutivos.");
+			gotoxy(45,9);
+			printf("5. No debe tener 2 letras alfabéticamente consecutivas.");
+			gotoxy(45,11);
+			printf("Ingrese la contrasenia: ");
+			_flushall();
+			gets(Recep.ContraseniaR);
+			if(strlen(Recep.ContraseniaR)>=6 and strlen(Recep.ContraseniaR)<=32)
 			{
-				if(Recep.ContraseniaR[i]>=40 and Recep.ContraseniaR[i]<=47 or Recep.ContraseniaR[i]>=58 and Recep.ContraseniaR[i]<=63 or Recep.ContraseniaR[i]>=90 and Recep.ContraseniaR[i]<=96 or Recep.ContraseniaR[i]>=123 and Recep.ContraseniaR[i]<=126 or Recep.ContraseniaR[i]==239)
+				for(int i=0;i<=Recep.ContraseniaR[i];i++)
 				{
-					gotoxy(48,13);
-					printf("La contrasenia no puede contener signos de puntuacion o acentos");
-					gotoxy(45,15);
-					system("pause");
-				}
-				else if(Recep.ContraseniaR[i]==' ')
-				{
-					espacio=espacio+1;
-					gotoxy(48,13);
-					printf("La contrasenia no debe tener espacios");
-					gotoxy(45,15);
-					system("pause");
-				}
-				
-				if(Recep.ContraseniaR[i]>=48 and Recep.ContraseniaR[i]<=57)
-				{
-					if(Recep.ContraseniaR[i]+1==Recep.ContraseniaR[i+1])
-					{
-						conse=conse+1;//numeros consecutivos
-					}
-					
-				}
-				if((Recep.ContraseniaR[i]>=65 and Recep.ContraseniaR[i]<=90) or (Recep.ContraseniaR[i]>=97 and Recep.ContraseniaR[i]<=122))
-				{
-					if(Recep.ContraseniaR[i]+1==Recep.ContraseniaR[i+1])
-					{
-						cons=cons+1;//Letras seguidas consecutivas
-					}
-				}
-		
-			}
-
-			if(espacio==0)
-			{
-				if(conse<3)
-				{
-					if(cons<1)
-					{
-						gotoxy(45,13);
-						printf("Contrasenia valida");
-						gotoxy(45,15);
-						system("pause");
-						bandera=2;
-					}
-					else
+					if((Recep.ContraseniaR[i]>=40 and Recep.ContraseniaR[i]<=47) or (Recep.ContraseniaR[i]>=58 and Recep.ContraseniaR[i]<=63) or (Recep.ContraseniaR[i]>=90 and Recep.ContraseniaR[i]<=96) or (Recep.ContraseniaR[i]>=123 and Recep.ContraseniaR[i]<=126) or Recep.ContraseniaR[i]==239)
 					{
 						gotoxy(48,13);
-						printf("La contrasenia no puede tener dos letras seguidas consecutivas");
+						printf("La contrasenia no puede contener signos de puntuacion o acentos");
 						gotoxy(45,15);
 						system("pause");
 					}
+					else if(Recep.ContraseniaR[i]==32)
+					{
+						espacio++;
+						gotoxy(48,13);
+						printf("La contrasenia no debe tener espacios");
+						gotoxy(45,15);
+						system("pause");
+					}
+					else if(Recep.ContraseniaR[i]>=48 and Recep.ContraseniaR[i]<=57)
+					{
+						if(Recep.ContraseniaR[i]+1==Recep.ContraseniaR[i+1])
+						{
+							conse=conse+1;//numeros consecutivos
+						}
+						
+					}
+					else if((Recep.ContraseniaR[i]>=65 and Recep.ContraseniaR[i]<=90) or (Recep.ContraseniaR[i]>=97 and Recep.ContraseniaR[i]<=122))
+					{
+						if(Recep.ContraseniaR[i]+1==Recep.ContraseniaR[i+1])
+						{
+							cons=cons+1;//Letras seguidas consecutivas
+						}
+					}
+			
 				}
-				else
+	
+				if(espacio==0)
 				{
-					if(conse>=4)
+					if(conse<3)
+					{
+						if(cons<1)
+						{
+							gotoxy(45,13);
+							printf("Contrasenia valida");
+							gotoxy(45,15);
+							system("pause");
+							bandera=2;
+						}
+						else
+						{
+							gotoxy(48,13);
+							printf("La contrasenia no puede tener dos letras seguidas consecutivas");
+							gotoxy(45,15);
+							system("pause");
+						}
+					}
+					else
 					{
 						gotoxy(48,13);
 						printf("La contrasenia no debe tener mas de 4 numeros consecutivos");
@@ -234,18 +231,21 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep)
 					}
 				}
 			}
-		}
-		else
-		{
-	
-			gotoxy(48,13);
-			printf("La Contrasenia debe tener entre 6 y 32 caracteres");
-			gotoxy(45,15);
-			system("pause");
-		}
-	}
-	system("cls");
+			else
+			{
+		
+				gotoxy(48,13);
+				printf("La Contrasenia debe tener entre 6 y 32 caracteres");
+				gotoxy(45,15);
+				system("pause");
+			}
+			system("cls");
+			espacio=0;
+			conse=0;
+			cons=0;
 	}while(bandera!=2);
+}
+
 	//ingreso datos del usuario
 	if(bandera==2){
 		gotoxy(44,3);
@@ -307,6 +307,7 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 				b=1;
 			}
 			fread(&user_aux,sizeof(Profesionales),1,prof);
+			b=0;
 		}
 	}
 	fclose(prof);
@@ -318,55 +319,54 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 
 	}
 	//Entre 6 y 10 caracteres 	
-	prof=fopen("Profesionales.dat","ab");
+	prof=fopen("Profesionales.dat","r+b");
 	if(strlen(Prof.UsuarioP)>=6 and strlen(Prof.UsuarioP)<=10 and b!=1)
 	{
 		//Primera letra en minuscula
 		if (Prof.UsuarioP[0] <= 122 && Prof.UsuarioP[0]>= 97)
 		{
 			min++;
-
-		//Tener dos letras mayusculas
-		for (int i=0;i<Prof.UsuarioP[i];i++)
-		{
-			if (Prof.UsuarioP[i] <= 90 && Prof.UsuarioP[i]>= 65)
+			//Tener dos letras mayusculas
+			for (int i=0;i<Prof.UsuarioP[i];i++)
 			{
-				may++;
-			}
-			if (Prof.UsuarioP[i] >= 48 && Prof.UsuarioP[i]<= 57)
-			{
-				 dig++;
-			}
-		}
-		if(may>=2)
-			{
-				if(dig<=3)
+				if (Prof.UsuarioP[i] <= 90 && Prof.UsuarioP[i]>= 65)
 				{
-					gotoxy(48,12);
-					printf("Usuario valido");
-					gotoxy(48,14);
-					system("pause");
-					bandera=1;
+					may++;
 				}
-				else
+				if (Prof.UsuarioP[i] >= 48 && Prof.UsuarioP[i]<= 57)
 				{
-					gotoxy(48,12);
-					printf("El usuario no puede tener mas de 3 digitos");
-					gotoxy(48,14);
-					printf("Usuario invalido");
-					gotoxy(48,16);
-					system("pause");
+					 dig++;
 				}
 			}
-		else
-		{
-			gotoxy(48,12);
-			printf("No posee la cantidad minima de mayusculas deben ser al menos 2");
-			gotoxy(48,14);
-			printf("Usuario invalido\n");
-			gotoxy(48,16);
-			system("pause");
-		}
+			if(may>=2)
+				{
+					if(dig<=3)
+					{
+						gotoxy(48,12);
+						printf("Usuario valido");
+						gotoxy(48,14);
+						system("pause");
+						bandera=1;
+					}
+					else
+					{
+						gotoxy(48,12);
+						printf("El usuario no puede tener mas de 3 digitos");
+						gotoxy(48,14);
+						printf("Usuario invalido");
+						gotoxy(48,16);
+						system("pause");
+					}
+				}
+			else
+			{
+				gotoxy(48,12);
+				printf("No posee la cantidad minima de mayusculas deben ser al menos 2");
+				gotoxy(48,14);
+				printf("Usuario invalido\n");
+				gotoxy(48,16);
+				system("pause");
+			}
 		}
 		else
 		{
@@ -378,119 +378,118 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 			system("pause");
 		}
 	}
-		else
-		{
-			gotoxy(48,12);
-			printf("La cantidad de caracteres debe ser de 6 a 10");
-			gotoxy(48,14);
-			printf("Usuario invalido\n");
-			gotoxy(48,16);
-			system("pause");
-		}
+	else
+	{
+		gotoxy(48,12);
+		printf("La cantidad de caracteres debe ser de 6 a 10");
+		gotoxy(48,14);
+		printf("Usuario invalido\n");
+		gotoxy(48,16);
+		system("pause");
+	}
 	system("cls");
 	}while(bandera!=1);
 	//CONTRASEÑA	
-	do{
-	system("color 74");
-	marco();
-	if(bandera==1)
-	{
-	gotoxy(45,4);
-	printf("LA CONTRASEÑA DEBE TENER: ");
-	gotoxy(45,5);
-	printf("1. Al menos una letra mayuscula, una letra minuscula y un numero.");
-	gotoxy(45,6);
-	printf("2.Solo caracteres alfanumericos.");
-	gotoxy(45,7);
-	printf("3. Debera tener entre 6 y 32 caracteres.");
-	gotoxy(45,8);
-	printf("4. No debe tener más de 3 caracteres numericos consecutivos.");
-	gotoxy(45,9);
-	printf("5. No debe tener 2 letras alfabéticamente consecutivas.");
-	gotoxy(45,11);
-	printf("Ingrese la contrasenia: ");
-	_flushall();
-	gets(Prof.ContraseniaP);
-		if(strlen(Prof.ContraseniaP)>=6 and strlen(Prof.ContraseniaP)<=32)
-		{
-			for(int i=0;i<=Prof.ContraseniaP[i];i++)
-			{
-				if(Prof.ContraseniaP[i]>=40 and Prof.ContraseniaP[i]<=47 or Prof.ContraseniaP[i]>=58 and Prof.ContraseniaP[i]<=63 or Prof.ContraseniaP[i]>=90 and Prof.ContraseniaP[i]<=96 or Prof.ContraseniaP[i]>=123 and Prof.ContraseniaP[i]<=126 or Prof.ContraseniaP[i]==239)
+	if(bandera==1){
+		do{
+			system("color 74");
+			marco();
+			gotoxy(45,4);
+			printf("LA CONTRASEÑA DEBE TENER: ");
+			gotoxy(45,5);
+			printf("1. Al menos una letra mayuscula, una letra minuscula y un numero.");
+			gotoxy(45,6);
+			printf("2.Solo caracteres alfanumericos.");
+			gotoxy(45,7);
+			printf("3. Debera tener entre 6 y 32 caracteres.");
+			gotoxy(45,8);
+			printf("4. No debe tener más de 3 caracteres numericos consecutivos.");
+			gotoxy(45,9);
+			printf("5. No debe tener 2 letras alfabéticamente consecutivas.");
+			gotoxy(45,11);
+			printf("Ingrese la contrasenia: ");
+			_flushall();
+			gets(Prof.ContraseniaP);
+			if(strlen(Prof.ContraseniaP)>=6 and strlen(Prof.ContraseniaP)<=32)
 				{
-					gotoxy(45,13);
-					printf("La contrasenia no puede contener signos de puntuacion o acentos");
-					gotoxy(45,15);
-					system("pause");
-				}
-				else if(Prof.ContraseniaP[i]==' ')
-				{
-					espacio=espacio+1;
-					gotoxy(45,13);
-					printf("La contrasenia no debe tener espacios");
-					gotoxy(45,15);
-					system("pause");
-				}
+					for(int i=0;i<=Recep.ContraseniaR[i];i++)
+					{
+						if((Prof.ContraseniaP[i]>=40 and Prof.ContraseniaP[i]<=47) or (Prof.ContraseniaP[i]>=58 and Prof.ContraseniaP[i]<=63) or (Prof.ContraseniaP[i]>=90 and Prof.ContraseniaP[i]<=96) or (Prof.ContraseniaP[i]>=123 and Prof.ContraseniaP[i]<=126) or Prof.ContraseniaP[i]==239)
+						{
+							gotoxy(48,13);
+							printf("La contrasenia no puede contener signos de puntuacion o acentos");
+							gotoxy(45,15);
+							system("pause");
+						}
+						else if(Prof.ContraseniaP[i]==32)
+						{
+							espacio++;
+							gotoxy(48,13);
+							printf("La contrasenia no debe tener espacios");
+							gotoxy(45,15);
+							system("pause");
+						}
+						else if(Prof.ContraseniaP[i]>=48 and Prof.ContraseniaP[i]<=57)
+						{
+							if(Prof.ContraseniaP[i]+1==Prof.ContraseniaP[i+1])
+							{
+								conse=conse+1;//numeros consecutivos
+							}
+							
+						}
+						else if((Prof.ContraseniaP[i]>=65 and Prof.ContraseniaP[i]<=90) or (Prof.ContraseniaP[i]>=97 and Prof.ContraseniaP[i]<=122))
+						{
+							if(Prof.ContraseniaP[i]+1==Prof.ContraseniaP[i+1])
+							{
+								cons=cons+1;//Letras seguidas consecutivas
+							}
+						}
 				
-				if(Prof.ContraseniaP[i]>=48 and Prof.ContraseniaP[i]<=57)
-				{
-					if(Prof.ContraseniaP[i]+1==Prof.ContraseniaP[i+1])
-					{
-						conse=conse+1;//numeros consecutivos
 					}
-					
-				}
-				if((Prof.ContraseniaP[i]>=65 and Prof.ContraseniaP[i]<=90) or (Prof.ContraseniaP[i]>=97 and Prof.ContraseniaP[i]<=122))
-				{
-					if(Prof.ContraseniaP[i]+1==Prof.ContraseniaP[i+1])
-					{
-						cons=cons+1;//Letras seguidas
-					}
-				}
 		
-			}
-
-			if(espacio==0)
-			{
-				if(conse<3)
-				{
-					if(cons<1)
+					if(espacio==0)
 					{
-						gotoxy(45,13);
-						printf("Contrasenia valida");
-						gotoxy(45,15);
-						system("pause");
-						bandera=2;
-					}
-					else
-					{
-						gotoxy(45,13);
-						printf("La contrasenia no puede tener dos letras seguidas");
-						gotoxy(45,15);
-						system("pause");
+						if(conse<3)
+						{
+							if(cons<1)
+							{
+								gotoxy(45,13);
+								printf("Contrasenia valida");
+								gotoxy(45,15);
+								system("pause");
+								bandera=2;
+							}
+							else
+							{
+								gotoxy(48,13);
+								printf("La contrasenia no puede tener dos letras seguidas consecutivas");
+								gotoxy(45,15);
+								system("pause");
+							}
+						}
+						else
+						{
+							gotoxy(48,13);
+							printf("La contrasenia no debe tener mas de 4 numeros consecutivos");
+							gotoxy(45,15);
+							system("pause");
+						}
 					}
 				}
 				else
 				{
-					if(conse>=4)
-					{				
-					gotoxy(45,14);
-					printf("La contrasenia no debe tener mas de 4 numeros consecutivos");
-					gotoxy(45,16);
+			
+					gotoxy(48,13);
+					printf("La Contrasenia debe tener entre 6 y 32 caracteres");
+					gotoxy(45,15);
 					system("pause");
-					}
 				}
-			}
-		}
-		else
-		{
-			gotoxy(45,13);
-			printf("La Contrasenia debe tener entre 6 y 32 caracteres");
-			gotoxy(45,15);
-			system("pause");
-		}
-	}
-	system("cls");
-	}while(bandera!=2);
+				system("cls");
+				espacio=0;
+				conse=0;
+				cons=0;
+		}while(bandera!=2);
+}
  	//ingreso datos del usuario
 	if(bandera==2)
 	{
@@ -517,9 +516,7 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 	fwrite(&Prof,sizeof(Profesionales),1,prof);
 	}
 
-	fclose(prof);
-	
-}
+	fclose(prof);}
 void atenciones(FILE *turn, Turnos Turn) //errores
 {
 	system("color 74");

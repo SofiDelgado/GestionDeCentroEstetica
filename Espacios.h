@@ -90,10 +90,12 @@ void progreso(registro reg,FILE *turn, FILE *client)
 			_flushall();
 			gets(reg.avance);
 			
-		}else{
+		}
+		else
+		{
 			gotoxy(46,10);
 			printf("PACIENTE NO REGISTRADO");
-			break;
+			system("pause");
 		}
 		fread(&reg, sizeof(registro),1,turn);
 	}

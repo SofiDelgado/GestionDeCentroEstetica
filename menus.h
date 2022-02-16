@@ -77,6 +77,11 @@ void MenuAdmin(FILE *arch,Profesionales Prof,FILE *recep,Recepcionista Recep,Ate
 		system("cls");
 		break;
 		case 6: 
+		gotoxy(49,9);
+		printf("saliendo...");
+		gotoxy(49,10);
+		system("pause"); 
+		system("cls");
 		break;
 		default:
 		gotoxy(49,9);
@@ -181,7 +186,6 @@ void MenuEspacios (FILE *prof,Profesionales Prof,FILE *turn,Turnos Turn, FILE *c
 			system("CLS");
 			break;
 		case 3:
-
             break;
 		default:
 			system("cls");
@@ -192,6 +196,6 @@ void MenuEspacios (FILE *prof,Profesionales Prof,FILE *turn,Turnos Turn, FILE *c
 			system("cls");
 		break;
 	}
-	}while(rep==true);
+	}while(op!=3);
 
 }
