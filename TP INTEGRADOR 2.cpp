@@ -34,9 +34,15 @@ main(){
 	FILE*recep;
 	FILE*client;
 	FILE*turn;
-	int op,j;
+	int op,j,i=0;
 	int permiso;
-	MenuAdmin(prof,Prof,recep,Recep,Aten,turn,Turn);
+	int num_Recepcionista=0,numMeds=0,num_Clientes=0,num_turnos=0;
+	Recepcionista reg_Recepcionista[50];
+    Profesionales reg_meds[50];
+    Cliente reg_Clientes[50];
+    Turnos reg_turnos[50];
+	
+    cargar_registros(reg_Recepcionista,reg_meds,reg_Clientes,reg_turnos,num_Recepcionista,numMeds,num_Clientes,num_turnos);
 	do{
 		bool verificacion=false;
 		system("color 70");
@@ -69,14 +75,14 @@ main(){
 				if(permiso==2 and verificacion==true)
 				{
 				system("cls");
-				MenuRecep(client,Clien,prof,Prof,turn,Turn,Aten);
+				MenuRecep(prof,recep,Recep,client,Clien,prof,Prof,turn,Turn,Aten);
 				}
 				else
 				{	
 					if(permiso==3 and verificacion==true)
 					{
 						system("cls");
-						MenuEspacios(prof,Prof,turn,Turn,client,Clien);
+						MenuEspacios(prof,Prof,turn,Turn,client,Clien,num_turnos,num_Clientes);
 					}
 					else
 					{
