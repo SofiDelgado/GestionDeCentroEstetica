@@ -96,7 +96,7 @@ void MenuAdmin(FILE *arch,Profesionales Prof,FILE *recep,Recepcionista Recep,Ate
 	}while(op!=6);
 	
 }
-void MenuRecep(FILE *client,Cliente Clien,FILE *prof, Profesionales Prof, FILE* turn, Turnos Turn,Atenciones Aten)
+void MenuRecep(FILE *arch,FILE *recep,Recepcionista Recep,FILE *client,Cliente Clien,FILE *prof, Profesionales Prof, FILE* turn, Turnos Turn,Atenciones Aten)
 {
 	int Opc;
 	
@@ -131,6 +131,8 @@ void MenuRecep(FILE *client,Cliente Clien,FILE *prof, Profesionales Prof, FILE* 
 			break;
 	        case 2:
 	        system("CLS");
+	        ver(arch,Prof,recep,Recep);
+	        system("CLS");
 	        Regturno(turn, Turn, prof, Prof);
 	        system("CLS");
 	        break;
@@ -159,7 +161,7 @@ void MenuRecep(FILE *client,Cliente Clien,FILE *prof, Profesionales Prof, FILE* 
 	}while(Opc!=4);
 }
 
-void MenuEspacios (FILE *prof,Profesionales Prof,FILE *turn,Turnos Turn, FILE *client,Cliente Clien)
+void MenuEspacios (FILE *prof,Profesionales Prof,FILE *turn,Turnos Turn, FILE *client,Cliente Clien,int num_turnos, int num_Clientes)
 {
 	int op;
 	char rep=true;
@@ -185,17 +187,17 @@ void MenuEspacios (FILE *prof,Profesionales Prof,FILE *turn,Turnos Turn, FILE *c
 	switch(op){
 		case 1:
 			system("CLS");
-			ListadeEspera(turn,Turn,client,Clien);
+			ListadeEspera(turn,Turn);
+			system("PAUSE");
 			system("CLS");	
 			break;						
 		case 2:
 			system("CLS");
-			EvolucionTrat(prof,Prof,reg,client,turn);
+			RegistroEvolucionCliente(turn,client,Clien,Turn);
 			system("PAUSE");
 			system("CLS");
 			break;
 		case 3:
-			guardar_archivo(Turn,turn);
 			system("cls");
 			marco();
 			gotoxy(49,9);

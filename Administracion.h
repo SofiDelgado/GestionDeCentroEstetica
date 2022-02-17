@@ -18,7 +18,7 @@ struct Cliente{
 	fecha fechadeNacimiento;
 }Clien;
 struct Turnos{
-	int IDprof;
+	int IDprof,fueatendido;//-1) si -2) no
 	fecha FechaATENCION;
 	char DetalleAtencion[60],apeynom[50],DNIcliente[50];
 }Turn;
@@ -50,7 +50,7 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 	gets(Prof.UsuarioP);
 	//validar que no exista el mismo usuario
 	
-	prof=fopen("Profesionales.dat","rb");
+	prof=fopen("Profesional.dat","rb");
 	
 	if(prof!=NULL)
 	{
@@ -77,7 +77,7 @@ void CargarProfesional(FILE *prof,Profesionales Prof)
 	}
 	else{
 	//Entre 6 y 10 caracteres 	
-	prof=fopen("Profesionales.dat","ab");
+	prof=fopen("Profesional.dat","ab");
 	if(strlen(Prof.UsuarioP)>=6 and strlen(Prof.UsuarioP)<=10)
 	{
 		//Primera letra en minuscula
@@ -599,7 +599,7 @@ void ranking(Profesionales Prof,Turnos Turn,Atenciones Aten)
     int i = 0,num_meds = 0,num_turnos = 0,contador = 0;
 
     //Archivo de Medicos:
-    arch=fopen("Profesionales.dat","rb");
+    arch=fopen("Profesional.dat","rb");
 
     if (arch==NULL)
     {
@@ -607,7 +607,7 @@ void ranking(Profesionales Prof,Turnos Turn,Atenciones Aten)
 	marco();
 	system("cls");
     	gotoxy(30,5);
-        printf("El archivo 'Profesionales.dat' o 'Recepcionistas.dat'  no fue creado o se elimino, contacte con soporte.");
+        printf("El archivo 'Profesional.dat' o 'Recepcionistas.dat'  no fue creado o se elimino, contacte con soporte.");
 		band = false;
 		gotoxy(30,8);
 		system("pause");
@@ -715,7 +715,7 @@ void ver(FILE *prof,Profesionales Prof,FILE *recep, Recepcionista Recep)
 {
 	gotoxy(48,3);
 	printf("Profesionales");
-	prof = fopen ("Profesionales.dat","a+b");
+	prof = fopen ("Profesional.dat","a+b");
 	fread(&Prof,sizeof(Profesionales),1,prof);
 	
 	while(!feof(prof))
@@ -810,4 +810,90 @@ void ver(FILE *prof,Profesionales Prof,FILE *recep, Recepcionista Recep)
 		gotoxy(48,3);
 		}
 	fclose(recep);
+}
+
+void cargar_registros(Recepcionista reg_Recepcionista[50],Profesionales reg_meds[50],Cliente reg_Clientes[50],Turnos reg_turnos[50],int &num_Recepcionista,int &numMeds,int &num_Clientes,int &num_turnos)
+{
+    FILE *arch;
+    int i = 0;
+    
+    //Archivo de Profesionals:
+    arch=fopen("Profesional.dat","rb");
+
+    if (arch==NULL)
+    {
+        printf("\nEl archivo 'Profesionales.dat' no fue creado o se elimino, contacte con soporte.");
+    }
+    else
+    {
+        fread(&reg_meds[i],sizeof(Profesionales),1,arch);
+        while (!feof(arch))
+        {
+            i++;
+            fread(&reg_meds[i],sizeof(Profesionales),1,arch);
+        }
+        numMeds = i;
+        i = 0;
+        fclose(arch);
+    }
+
+    //Archivo de Recepcionista:
+    arch=fopen("Recepcionistas.dat","rb");
+    
+    if (arch==NULL)
+    {
+        printf("\nEl archivo 'Recepcionista.dat' no fue creado o se elimino, contacte con soporte.");
+    }
+    else
+    {
+        fread(&reg_Recepcionista[i],sizeof(Recepcionista),1,arch);
+        while (!feof(arch))
+        {
+            i++;
+            fread(&reg_Recepcionista[i],sizeof(Recepcionista),1,arch); 
+        }
+        num_Recepcionista	 = i;
+        i = 0;
+        fclose(arch);
+    }
+    
+    //Archivo de Clientes:
+    arch=fopen("Clientes.dat","rb");
+
+    if (arch==NULL)
+    {
+        printf("\nEl archivo 'Clientes.dat' no fue creado o se elimino, contacte con soporte.");
+    }
+    else
+    {
+        fread(&reg_Clientes[i],sizeof(Cliente),1,arch);
+        while (!feof(arch))
+        {
+            i++;
+            fread(&reg_Clientes[i],sizeof(Cliente),1,arch); 
+        }
+        num_Clientes = i;
+        i = 0;
+        fclose(arch);
+    }
+    
+    //Archivo de turnos:
+    arch=fopen("Turnos.dat","rb");
+
+    if (arch==NULL)
+    {
+        printf("\nEl archivo 'Turnos.dat' no fue creado o se elimino, contacte con soporte.");
+    }
+    else
+    {
+        fread(&reg_turnos[i],sizeof(Turnos),1,arch);
+        while (!feof(arch))
+        {
+            i++;
+            fread(&reg_turnos[i],sizeof(Turnos),1,arch); 
+        }
+        num_turnos = i;
+        i = 0;
+        fclose(arch);
+    }
 }

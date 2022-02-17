@@ -1,32 +1,8 @@
 void login(FILE *prof, FILE *recep,Profesionales Prof,Recepcionista Recep,int &permiso,bool &verificacion)
 {	
-	//marco
-	for (int j=1; j < 120; j++) {
-	  gotoxy(j, 1);
-	  printf("%c", 177);
-	  gotoxy(j, 24);
-	  printf("%c",177);
-	 }
-	  for (int d = 2; d < 24; d++) {
-	   gotoxy(1, d);
-	   printf("%c", 179);
-	   gotoxy(119, d);
-	   printf("%c", 179);
-	  }
-	  gotoxy(1, 1);
-	  printf("%c", 223);
-
-	  gotoxy(119, 1);
-	  printf("%c",223);
-	
-	  gotoxy(1, 24);
-	  printf("%c", 223);
-	
-	  gotoxy(119, 24);
-	  printf("%c", 223);
-	  //Fin Marco
+	marco();
 	int i,b;
-		int mcontra=0, musuario=0;
+	int mcontra=0, musuario=0;
 	int d;
 	char usuario[60],contrasenia[60];
 	gotoxy(50,5);
@@ -35,17 +11,27 @@ void login(FILE *prof, FILE *recep,Profesionales Prof,Recepcionista Recep,int &p
 	printf("INICIO DE SESION");
 	gotoxy(50,7);
 	printf("==================");
-		gotoxy(49,10);
-		printf("USUARIO:");
-		_flushall();
-		gets(usuario);
+	gotoxy(49,10);
+	printf("USUARIO:");
+	_flushall();
+	gets(usuario);
 	gotoxy(49,11);
-		printf("Contrasenia:");
-		_flushall();
-		gets(contrasenia);
+	printf("Contrasenia:");
+	_flushall();
+	gets(contrasenia);
 		
-		prof = fopen ("Profesionales.dat","rb");
-		
+	prof = fopen ("Profesional.dat","rb");
+	recep = fopen ("Recepcionistas.dat","rb");
+	if(prof==NULL or recep==NULL)
+	{
+	system("cls");
+	marco();
+	gotoxy(15,5);
+	printf("El archivo 'Profesional.dat' o 'Recepcionistas.dat' no fue creado o se elimino, contacte con soporte.");
+	gotoxy(30,8);
+	system("pause");
+	}
+
 		fread(&Prof,sizeof(Profesionales),1,prof);
 		while(!feof(prof) and mcontra==0 and musuario==0)
 		{
@@ -61,8 +47,7 @@ void login(FILE *prof, FILE *recep,Profesionales Prof,Recepcionista Recep,int &p
 			}
 		}
 		fclose(prof);
-		
-		recep = fopen ("Recepcionistas.dat","rb");
+
 		fread(&Recep,sizeof(Recepcionista),1,recep);
 		while(!feof(recep) and mcontra==0 and musuario==0)
 		{

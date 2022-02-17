@@ -41,7 +41,6 @@ main(){
     Profesionales reg_meds[50];
     Cliente reg_Clientes[50];
     Turnos reg_turnos[50];
-	
     cargar_registros(reg_Recepcionista,reg_meds,reg_Clientes,reg_turnos,num_Recepcionista,numMeds,num_Clientes,num_turnos);
 	do{
 		bool verificacion=false;
