@@ -41,7 +41,8 @@ main(){
     Profesionales reg_meds[50];
     Cliente reg_Clientes[50];
     Turnos reg_turnos[50];
-    cargar_registros(reg_Recepcionista,reg_meds,reg_Clientes,reg_turnos,num_Recepcionista,numMeds,num_Clientes,num_turnos);
+    //cargar_registros(reg_Recepcionista,reg_meds,reg_Clientes,reg_turnos,num_Recepcionista,numMeds,num_Clientes,num_turnos);
+	//Turnoss(Turn);
 	do{
 		bool verificacion=false;
 		system("color 70");
@@ -95,7 +96,6 @@ main(){
 			system("cls");
 			break;
 			case 2:
-			
 			system("cls");
 			gotoxy(49,15);
 			printf("Saliendo...");

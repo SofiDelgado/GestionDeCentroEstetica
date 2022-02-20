@@ -13,7 +13,7 @@ struct fecha{
 	int dia,mes,anio;
 };
 struct Cliente{
-	char apeynom[60], Domicilio[60],Localidad[60],Telefono[25],Dni[50];
+	char apeynom[60], Domicilio[60],Localidad[60],Telefono[25],Dni[50],DetalleAtencion[60];
 	float peso;
 	fecha fechadeNacimiento;
 }Clien;
@@ -535,53 +535,78 @@ void CargarRecepcionista(FILE *recep,Recepcionista Recep){
 
 	fclose(recep);
 }
-void atenciones(FILE *turn, Turnos Turn) //errores
+void atenciones(FILE *turn, Turnos Turn,Profesionales Prof)
 {
 	system("color 74");
 	marco();
-	
-	int mes,b=0;
+	FILE *prof;
+	int mes,b=0,ID,c=0;
 	turn=fopen("Turnos.dat","rb");
+	gotoxy(40,4);
+	printf("Ingrese el ID del profesional: ");
+	scanf("%d",&ID);
 	
-	gotoxy(40,3);
-	printf("Ingrese el mes para mostrar las atenciones: ");
-	scanf("%d",&mes);
-	
-	fread(&Turn,sizeof(Turnos),1,turn);
-	while(!feof(turn))
-	{
-		marco();
-		if(mes==Turn.FechaATENCION.mes)
+	prof=fopen("Profesional.dat","rb");
+	fread(&Prof,sizeof(Profesionales),1,prof);
+    while (!feof(prof))
+    {
+		if(ID==Prof.IDprof && Prof.permisoP==3)
 		{
 			b=1;
-			gotoxy(40,4);
-			printf("Fecha:");
-			gotoxy(47,4);
-			printf("%d/",Turn.FechaATENCION.dia);
-			gotoxy(51,4);
-			printf("%d/",Turn.FechaATENCION.mes);
-			gotoxy(55,4);
-			printf("%d",Turn.FechaATENCION.anio);
-			gotoxy(40,5);
-			printf("DNI del paciente: %s",Turn.DNIcliente);
-			gotoxy(40,7);
-			printf("Detalles de atencion: %s\n",Turn.DetalleAtencion);
-			gotoxy(46,10);
-			system("pause");
-			system("cls");
-			gotoxy(46,4);
+			gotoxy(40,6);
+			printf("PROFESIONAL: %s",Prof.apeynom);
+		break;
 		}
+		else
+		{
+			fread(&Prof,sizeof(Profesionales),1,prof);
+		}
+    }
+    fclose(prof);
+    if(b==1){
+		gotoxy(40,8);
+		printf("Ingrese el mes para mostrar las atenciones: ");
+		scanf("%d",&mes);
+		
 		fread(&Turn,sizeof(Turnos),1,turn);
+		while(!feof(turn))
+		{
+			marco();
+			if(Turn.IDprof== ID && mes==Turn.FechaATENCION.mes && Turn.fueatendido==1)
+			{
+				c=1;
+				gotoxy(40,10);
+				printf("Fecha: ");
+				gotoxy(47,10);
+				printf("%d/%d/%d",Turn.FechaATENCION.dia,Turn.FechaATENCION.mes,Turn.FechaATENCION.anio);
+				gotoxy(40,11);
+				printf("Nombre y apellido: %s",Turn.apeynom);
+				gotoxy(40,12);
+				printf("DNI del paciente:%s",Turn.DNIcliente);
+				gotoxy(40,13);
+				printf("Detalles de atencion: %s",Turn.DetalleAtencion);
+				gotoxy(40,15);
+				system("pause");
+				system("cls");
+			}
+			fread(&Turn,sizeof(Turnos),1,turn);
+		}
+		fclose(turn);
 	}
-	fclose(turn);
-	if(b==0)
+	else
 	{
-		gotoxy(46,4);
-		marco();
-		printf("No hay turnos para el mes ingresado");
-		gotoxy(46,6);
+		gotoxy(40,7);
+		printf("ID INEXISTENTE");
+		gotoxy(40,9);
 		system("pause");
 	}
+	if(b==1 && c==0)
+		{
+			gotoxy(40,10);
+			printf("El profesional no realizo atenciones ese mes ");
+			gotoxy(40,12);
+			system("pause");
+		}
 
 														 
 }
@@ -617,8 +642,10 @@ void ranking(Profesionales Prof,Turnos Turn,Atenciones Aten)
         fread(&reg_med[i],sizeof(Profesionales),1,arch);
         while (!feof(arch))
         {
+        	if(reg_med[i].permisoP==3){
             i++;
-            fread(&reg_med[i],sizeof(Profesionales),1,arch);
+        	}
+            fread(&reg_med[i],sizeof(Profesionales),1,arch);	
         }
         num_meds = i;
         i = 0;
@@ -644,7 +671,10 @@ void ranking(Profesionales Prof,Turnos Turn,Atenciones Aten)
         fread(&reg_turnos[i],sizeof(Turnos),1,arch);
         while (!feof(arch))
         {
-            i++;
+        	if(reg_turnos[i].fueatendido==1)
+        	{
+           	 i++;
+        	}
             fread(&reg_turnos[i],sizeof(Turnos),1,arch); 
         }
         num_turnos = i;
@@ -661,7 +691,7 @@ void ranking(Profesionales Prof,Turnos Turn,Atenciones Aten)
 
 			for (int k = 0; k < num_turnos; k++)
 			{
-				if ((reg_med[i].IDprof == reg_turnos[k].IDprof) /*and (reg_turnos[k].mostrado == 1)*/)
+				if (reg_med[i].permisoP==3 && reg_med[i].IDprof == reg_turnos[k].IDprof && reg_turnos[i].fueatendido==1)
 				{
 					contador++;
 				}
@@ -713,8 +743,6 @@ void ranking(Profesionales Prof,Turnos Turn,Atenciones Aten)
 }
 void ver(FILE *prof,Profesionales Prof,FILE *recep, Recepcionista Recep)
 {
-	gotoxy(48,3);
-	printf("Profesionales");
 	prof = fopen ("Profesional.dat","a+b");
 	fread(&Prof,sizeof(Profesionales),1,prof);
 	
@@ -762,8 +790,6 @@ void ver(FILE *prof,Profesionales Prof,FILE *recep, Recepcionista Recep)
 		}
 	fclose(prof);
 	
-	gotoxy(48,3);
-	printf("Recepcionistas");
 	recep = fopen ("Recepcionistas.dat","a+b");
 	fread(&Recep,sizeof(Recepcionista),1,recep);
 

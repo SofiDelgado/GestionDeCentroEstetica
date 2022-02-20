@@ -1,7 +1,9 @@
 void Regcliente(FILE *client,Cliente Clien){
 	system("color 75");
 	marco();
-	
+	FILE *arch;
+	int b=0;
+	char Dni[50];
 	client = fopen ("Clientes.dat","a+b");
 	gotoxy(48,3);
 	printf("=====================");
@@ -10,16 +12,34 @@ void Regcliente(FILE *client,Cliente Clien){
 	gotoxy(48,5);
 	printf("=====================");
 	gotoxy(48,7);
+	printf("Ingrese el DNI del Cliente: ");
+	_flushall();
+	gets(Dni);
+	
+	/*arch=fopen("Clientes.dat","rb");
+	fread(&Clien,sizeof(Cliente),1,arch);
+    while (!feof(arch))
+    {
+		if(strcmp(Dni,Clien.Dni)==0)
+		{
+			b=1;
+		break;
+		}
+		else
+		{
+			fread(&Clien,sizeof(Cliente),1,arch);
+		}
+    }
+    fclose(arch);*/
+    
+    strcpy(Clien.Dni,Dni);	
+    gotoxy(48,8);
 	printf("Ingrese el nombre del Cliente: ");
 	_flushall();
 	gets(Clien.apeynom);
-	gotoxy(48,8);
+	gotoxy(48,9);
 	printf("Ingrese el domicilio del Cliente: ");
 	gets(Clien.Domicilio);
-	gotoxy(48,9);
-	printf("Ingrese el DNI del Cliente: ");
-	_flushall();
-	gets(Clien.Dni);
 	gotoxy(48,10);	
 	printf("Ingrese la localidad del Cliente: ");
 	_flushall();
@@ -42,8 +62,15 @@ void Regcliente(FILE *client,Cliente Clien){
 	printf("Ingrese el telefono del Cliente: ");
 	_flushall();
 	gets(Clien.Telefono);
-	
 	fwrite(&Clien,sizeof(Cliente),1,client);
+	
+	/*if(b==0)
+	{
+		gotoxy(48,8);
+		printf("El cliente ya existe en nuestra base de datos");
+		gotoxy(48,9);
+		system("pause");
+	}*/
 	fclose(client);		
 }
 
@@ -52,7 +79,7 @@ void Regturno (FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
 	FILE *arch;
 	FILE *client;
 	int a,aux;
-	int b=0,c=0;
+	int b=0,c=0,buscar;
 	char dnicliente[50];
 	system("color 75");
 	marco();
@@ -63,37 +90,32 @@ void Regturno (FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
 	gotoxy(48,5);
 	printf("================");
 	gotoxy(48,7);
-	printf("Ingrese el ID del profesional: ");
-	scanf("%d",&a);
+	printf("Ingrese el ID del Medicos: ");
+	scanf("%d",&buscar);
 	
-	prof = fopen("Profesional.dat","rb");
-	fread(&Prof,sizeof(Profesionales),1,prof);
-	while(!feof(prof))
-	{
-		if(a==Prof.IDprof)
+		prof=fopen("Profesional.dat","rb");
+		fread(&Prof,sizeof(Profesionales),1,prof);
+		while(!feof(prof))
 		{
-			b=1;
-			
-			break;
+			if(buscar==Prof.IDprof && Prof.permisoP==3)
+			{
+				b=1;
+				break;
+			}
+			else
+			{
+				fread(&Prof,sizeof(Profesionales),1,prof);
+			}
 		}
-		else
-		{
-			fread(&Prof,sizeof(Profesionales),1,prof);
-		}
-	}
-
 		fclose(prof);
-
 		if(b==0)
 		{
-			gotoxy(48,8);
-			printf("ID no encontrada.");
 			gotoxy(48,9);
+			printf("ID de Medicos no encontrada.");
+			gotoxy(48,11);
 			system("pause");
 		}
-		else
-		{
-			a=Turn.IDprof;
+		else{
 			gotoxy(48,8);
 			printf("Ingrese el DNI del Cliente: ");
 			_flushall();
@@ -106,7 +128,8 @@ void Regturno (FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
 				if(strcmp(dnicliente,Clien.Dni)==0)
 				{
 					c=1;
-					
+					gotoxy(48,9);
+					printf("Nombre: %s",Clien.apeynom);
 					break;
 				}
 				else
@@ -115,140 +138,168 @@ void Regturno (FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof)
 				}
 			}
 			fclose(client);
-			turn = fopen("Turnos.dat","ab");
+			
+			turn = fopen("Turnos.dat","a+b");
+			
 			if(c==1)
 			{
+			Turn.IDprof=buscar;
 			strcpy(Turn.DNIcliente,dnicliente);
-			gotoxy(48,9);
-			printf("Ingrese el nombre y apellidodel Cliente: ");
-			_flushall();
-			gets(Turn.apeynom);
+			strcpy(Turn.apeynom,Clien.apeynom);
 			gotoxy(48,10);
 			printf("Ingrese la fecha del turno.");
-			gotoxy(48,11);
-			printf("Ingrese el dia: ");
+			gotoxy(75,10);
 			scanf("%d",&Turn.FechaATENCION.dia);
-			gotoxy(48,12);
-			printf("Ingrese el mes: ");
+			gotoxy(77,10);
+			printf("/");
+			gotoxy(78,10);
 			scanf("%d",&Turn.FechaATENCION.mes);
-			gotoxy(48,13);
-			printf("Ingrese el anio: ");
+			gotoxy(80,10);
+			printf("/");
+			gotoxy(81,10);
 			scanf("%d",&Turn.FechaATENCION.anio);
 			Turn.fueatendido=2;
-			strcpy(Turn.DetalleAtencion,"vacio");
 			
-			gotoxy(48,15);
+			gotoxy(48,12);
 			printf("======Turno registrado======");
-			gotoxy(48,17);
+			gotoxy(48,14);
 			system("pause");
 			fwrite(&Turn,sizeof(Turnos),1,turn);
 		}
 		else{
-			system("cls");
-			gotoxy(45,6);
+			marco();
+			gotoxy(48,10);
 			printf("Dni inexistente");
-			gotoxy(45,8);
+			gotoxy(48,12);
 			system("pause");
 		}
-
-			fclose(turn);
-		}
-}
-void Listatenc(FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof) //solo lee las atenciones de un medico
-{
-		turn=fopen("Turnos.dat","rb");
-		prof=fopen("Profesionales.dat","rb");
-		
-		fread(&Turn,sizeof(Turnos),1,turn);
-	    fread(&Prof,sizeof(Profesionales),1,prof);
-			while(!feof(turn)){
-				system("color 75");
-				marco();
-				if(Turn.IDprof==Prof.IDprof){
-					gotoxy(48,3);
-					printf("====================");
-					gotoxy(48,4);
-					printf("LISTA DE ATENCIONES");
-					gotoxy(48,5);
-					printf("====================");
-					gotoxy(48,7);
-					printf("Medicos: ");
-					gotoxy(48,8);
-					printf("Fecha - Turno");
-					gotoxy(59,7);
-					printf("%s",Prof.apeynom);
-					gotoxy(48,9);
-					printf("%d/%d/%d",Turn.FechaATENCION.dia, Turn.FechaATENCION.mes, Turn.FechaATENCION.anio);
-					gotoxy(48,12);
-					system("pause");
-				}
-				system("cls");
-			fread(&Turn,sizeof(Turnos),1,turn);
-		    fread(&Prof,sizeof(Profesionales),1,prof);		
-		}
 		fclose(turn);
-		fclose(prof);
-	
-
-}
-/*void Listatenc(FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof) //solo lee las atenciones de un Profesional
-{
-	 	int Buscador,j=0,AnioBuscar,MesBuscar,DiaBuscar,Repetidor;
-		FILE *Auxiliar = fopen ("Auxiliar.dat","w+b");
-		turn=fopen("Turnos.dat","rb");
+	}
 		
-		if(turn==NULL)
-		{
-		system("color 75");
+		
+}
+void Turnoss(Turnos Turn){
+	FILE *turn;
+	turn=fopen("Turnos.dat","rb");
+	fread(&Turn,sizeof(Turnos),1,turn);
+	while(!feof(turn)){
 		marco();
-		gotoxy(30,4);
-		printf("Error al intentar abrir los archivos, contacte con el operador del sistema...");
-		gotoxy(30,6);
+		gotoxy(45,4);
+		printf("Profesional: %d",Turn.IDprof);
+		gotoxy(45,5);
+		printf("Nombre paciente: %s",Turn.apeynom);
+		gotoxy(45,6);
+		printf("DNI: %s",Turn.DNIcliente);
+		gotoxy(45,7);
+		printf("Fecha: %d/%d/%d",Turn.FechaATENCION.dia,Turn.FechaATENCION.mes,Turn.FechaATENCION.anio);
+		gotoxy(45,8);
+		printf("Fue atendido %d",Turn.fueatendido);
+		gotoxy(45,9);
 		system("pause");
-		}
-		OtroIntento:
-			printf("Ingrese la ID del profesional para ver su lista de evolucion de sus pacientes: ");
-		    scanf("%d",&Buscador);
-		    fflush(stdin);
-		    printf("Ingrese el dia del turno del paciente: ");
-		    scanf("%d",&DiaBuscar);
-		    fflush(stdin);
-		    printf("Ingrese el mes del turno del paciente: ");
-		    scanf("%d",&MesBuscar);
-		    fflush(stdin);
-		    printf("Ingrese el anio del turno del paciente: ");
-		    scanf("%d",&AnioBuscar);
-  
-				 while (!feof(turn)){
-		        fread (&Turn,sizeof(Turnos),1,turn);
-		        if (Buscador == Turn.IDprof && Turn.fueatendido == 1 && Turn.FechaATENCION.dia == DiaBuscar && Turn.FechaATENCION.mes == MesBuscar && Turn.FechaATENCION.anio == AnioBuscar){        
-					fwrite(&Turn,sizeof(Turnos),1,Auxiliar);
-		          j++;
-		        }
-		    }
-		
-		    if (j!= 0){
-		        rewind (Auxiliar);
-		        fread(&Turn,sizeof(Turnos),1,Auxiliar);
-		        printf("El profesional %d tiene %d pacientes atendidos y sus evoluciones son: \n",Turn.IDprof,j);
-		        printf("DNI Paciente: %d\nSu detalle de atencion es: ",Turn.DNIcliente);
-		        _flushall();
-				gets(Turn.DetalleAtencion);
-		        for (int i = 1; i < j; i++){
-		            fread(&Turn,sizeof(Turnos),1,Auxiliar);
-		            printf("DNI: %d\nSu detalle de atencion es: %s",Turn.DNIcliente,Turn.DetalleAtencion);
-		        }
-		        system("pause");
-		    }else{
-		        printf("No se pudo encontrar ningun doctor que haya tenido un cliente esa fecha.Si se equivoco en algunos de los datos y quiere volver a intentar ingrese 1: ");
-		        scanf("%d",&Repetidor);
-		        if(Repetidor == 1){
-		            goto OtroIntento;
-		        }
-		    }
-		    
-		fclose(turn);
+		system("cls");
+		fread(&Turn,sizeof(Turnos),1,turn);
+	}
+	fclose(turn);
+}
+void Listatenc(FILE *turn, Turnos Turn, FILE *prof, Profesionales Prof,Cliente Clien) //solo lee las atenciones de un medico
+{
+	FILE *archCLI;
+	FILE *archTUR;
+	int dia=0,mes=0,anio=0,b=0,ID,c=0 ;
+	marco();
+	system("color 75");
 
-	}*/
+	gotoxy(46,5);
+	printf("Ingrese el ID del profesional: ");
+	scanf("%d",&ID);
+	prof=fopen("Profesional.dat","rb");
+	fread(&Prof,sizeof(Profesionales),1,prof);
+    while (!feof(prof))
+    {
+		if(ID==Prof.IDprof)
+		{
+			b=1;
+			gotoxy(46,6);
+			printf("PROFESIONAL: %s",Prof.apeynom);
+		break;
+		}
+		else
+		{
+			fread(&Prof,sizeof(Profesionales),1,prof);
+		}
+    }
+    fclose(prof);
+    if(b==1)
+	{
+		gotoxy(46,7);
+		printf("Ingrese la fecha: ");
+		gotoxy(64,7);
+		scanf("%d",&dia);
+		gotoxy(66,7);
+		printf("/");
+		gotoxy(67,7);
+		scanf("%d",&mes);
+		gotoxy(69,7);
+		printf("/");
+		gotoxy(70,7);
+		scanf("%d",&anio);
+	
+		archTUR=fopen("Turnos.dat","rb");
+		archCLI=fopen("Clientes.dat","rb");
+		fread(&Turn,sizeof(Turnos),1,archTUR);
+		fread(&Clien,sizeof(Cliente),1,archCLI);
+		while(!feof(archTUR))
+		{
+			if(Turn.IDprof==ID && Turn.FechaATENCION.dia==dia and Turn.FechaATENCION.mes==mes and Turn.FechaATENCION.anio==anio and Turn.fueatendido==1)
+			{
+				while(!feof(archCLI))
+				{
+				
+					if(strcmp(Turn.DNIcliente,Clien.Dni)==0)
+					{
+						c=1;
+						system("color 75");
+						marco();
+						gotoxy(46,9);
+						printf("Cliente: ");
+						puts(Clien.apeynom);
+						gotoxy(46,10);
+						printf("DNI Cliente: %s",Clien.Dni);
+						gotoxy(46,11);
+						printf("Peso: %.2f Kg",Clien.peso);
+						gotoxy(46,12);
+						printf("Edad: %d anios",2022-(Clien.fechadeNacimiento.anio));
+						gotoxy(46,13);
+						printf("Evolucion del Cliente: ");
+						gotoxy(46,15);
+						puts(Turn.DetalleAtencion);
+						gotoxy(46,17);
+						system("pause");
+						system("cls");
+					}
+					fread(&Clien,sizeof(Cliente),1,archCLI);
+				}
+			}
+		fread(&Turn,sizeof(Turnos),1,archTUR);	
+	    }
+    	fclose(archTUR);
+    	fclose(archCLI);
+	}
+	else
+	{
+		gotoxy(46,9);
+		printf("ID INCORRECTA");
+		gotoxy(46,11);
+		system("pause");
+	}
+	if(b==1 and c==0)
+	{
+		gotoxy(46,9);
+		printf("No hay turnos en este fecha");
+		gotoxy(46,11);
+		system("pause");
+	}
+}
+
 	
 

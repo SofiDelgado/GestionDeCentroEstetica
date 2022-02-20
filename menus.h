@@ -35,7 +35,7 @@ void MenuAdmin(FILE *arch,Profesionales Prof,FILE *recep,Recepcionista Recep,Ate
 		gotoxy(44,4);
 		printf("=======================");
 		gotoxy(44,6);
-		printf("1.-Registrar profesional");
+		printf("1.-Registrar profesional o administrador ");
 		gotoxy(44,7);
 		printf("2.-Registrar Usuario Recepcionista");
 		gotoxy(44,8);
@@ -63,7 +63,7 @@ void MenuAdmin(FILE *arch,Profesionales Prof,FILE *recep,Recepcionista Recep,Ate
 		break;
 		case 3:
 		system("cls");
-		atenciones(turn,Turn);
+		atenciones(turn,Turn,Prof);
 		system("cls");
 		break;
 		case 4:
@@ -80,7 +80,7 @@ void MenuAdmin(FILE *arch,Profesionales Prof,FILE *recep,Recepcionista Recep,Ate
 		system("cls");
 		marco();
 		gotoxy(49,9);
-		printf("saliendo...");
+		printf("Saliendo...");
 		gotoxy(49,10);
 		system("pause"); 
 		system("cls");
@@ -130,22 +130,23 @@ void MenuRecep(FILE *arch,FILE *recep,Recepcionista Recep,FILE *client,Cliente C
 			system("CLS");
 			break;
 	        case 2:
-	        system("CLS");
-	        ver(arch,Prof,recep,Recep);
+	        //system("CLS");
+	        //Turnoss(Turn);
 	        system("CLS");
 	        Regturno(turn, Turn, prof, Prof);
-	        system("CLS");
+	        system("CLS");	
 	        break;
 	        case 3:
 	        system("CLS");
-	        Listatenc(turn, Turn, prof, Prof);
+	        Listatenc(turn, Turn, prof, Prof,Clien);
 			system("CLS");
+			break;
 	        case 4:
 	        system("cls");
 			marco();
 			gotoxy(49,9);
-			printf("saliendo...");
-			gotoxy(49,10);
+			printf("Saliendo...");
+			gotoxy(49,11);
 			system("pause"); 
 			system("cls");
 	        break;
@@ -188,20 +189,18 @@ void MenuEspacios (FILE *prof,Profesionales Prof,FILE *turn,Turnos Turn, FILE *c
 		case 1:
 			system("CLS");
 			ListadeEspera(turn,Turn);
-			system("PAUSE");
 			system("CLS");	
 			break;						
 		case 2:
 			system("CLS");
 			RegistroEvolucionCliente(turn,client,Clien,Turn);
-			system("PAUSE");
 			system("CLS");
 			break;
 		case 3:
 			system("cls");
 			marco();
 			gotoxy(49,9);
-			printf("saliendo...");
+			printf("Saliendo...");
 			gotoxy(49,10);
 			system("pause"); 
 			system("cls");
